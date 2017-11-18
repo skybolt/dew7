@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4C744921FB5468F00E82EB6 /* DEW7.ckcomplication in Resources */ = {isa = PBXBuildFile; fileRef = D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */; };
+		D4C744951FB5570000E82EB6 /* StatusReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C744941FB5570000E82EB6 /* StatusReporter.swift */; };
+		D4C744961FB5570000E82EB6 /* StatusReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C744941FB5570000E82EB6 /* StatusReporter.swift */; };
 		D4D7063E1FB3E77400523A1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7063D1FB3E77400523A1E /* AppDelegate.swift */; };
 		D4D706401FB3E77400523A1E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7063F1FB3E77400523A1E /* ViewController.swift */; };
 		D4D706431FB3E77400523A1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4D706411FB3E77400523A1E /* Main.storyboard */; };
@@ -20,7 +23,8 @@
 		D4D706631FB3E77400523A1E /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */; };
 		D4D706651FB3E77400523A1E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706641FB3E77400523A1E /* NotificationController.swift */; };
 		D4D706671FB3E77400523A1E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706661FB3E77400523A1E /* ComplicationController.swift */; };
-		D4D706691FB3E77400523A1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4D706681FB3E77400523A1E /* Assets.xcassets */; };
+		D4E68C921FBF7BBB0054274A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E68C911FBF7BBB0054274A /* Assets.xcassets */; };
+		D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E68C911FBF7BBB0054274A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DEW7.ckcomplication; sourceTree = "<group>"; };
+		D4C744941FB5570000E82EB6 /* StatusReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusReporter.swift; sourceTree = "<group>"; };
 		D4D7063A1FB3E77400523A1E /* DEW 7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DEW 7.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4D7063D1FB3E77400523A1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4D7063F1FB3E77400523A1E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,9 +88,9 @@
 		D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		D4D706641FB3E77400523A1E /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		D4D706661FB3E77400523A1E /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
-		D4D706681FB3E77400523A1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4D7066A1FB3E77400523A1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4D7066B1FB3E77400523A1E /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		D4E68C911FBF7BBB0054274A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,12 +111,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D4C744931FB5567700E82EB6 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				D4C744941FB5570000E82EB6 /* StatusReporter.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		D4D706311FB3E77400523A1E = {
 			isa = PBXGroup;
 			children = (
 				D4D7063C1FB3E77400523A1E /* DEW 7 */,
 				D4D706501FB3E77400523A1E /* DEW 7 WatchKit App */,
 				D4D7065F1FB3E77400523A1E /* DEW 7 WatchKit Extension */,
+				D4C744931FB5567700E82EB6 /* Shared */,
 				D4D7063B1FB3E77400523A1E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -128,6 +143,7 @@
 		D4D7063C1FB3E77400523A1E /* DEW 7 */ = {
 			isa = PBXGroup;
 			children = (
+				D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */,
 				D4D7063D1FB3E77400523A1E /* AppDelegate.swift */,
 				D4D7063F1FB3E77400523A1E /* ViewController.swift */,
 				D4D706411FB3E77400523A1E /* Main.storyboard */,
@@ -151,11 +167,11 @@
 		D4D7065F1FB3E77400523A1E /* DEW 7 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				D4E68C911FBF7BBB0054274A /* Assets.xcassets */,
 				D4D706601FB3E77400523A1E /* InterfaceController.swift */,
 				D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */,
 				D4D706641FB3E77400523A1E /* NotificationController.swift */,
 				D4D706661FB3E77400523A1E /* ComplicationController.swift */,
-				D4D706681FB3E77400523A1E /* Assets.xcassets */,
 				D4D7066A1FB3E77400523A1E /* Info.plist */,
 				D4D7066B1FB3E77400523A1E /* PushNotificationPayload.apns */,
 			);
@@ -267,9 +283,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C744921FB5468F00E82EB6 /* DEW7.ckcomplication in Resources */,
 				D4D706481FB3E77400523A1E /* LaunchScreen.storyboard in Resources */,
 				D4D706451FB3E77400523A1E /* Assets.xcassets in Resources */,
 				D4D706431FB3E77400523A1E /* Main.storyboard in Resources */,
+				D4E68C921FBF7BBB0054274A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,7 +304,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4D706691FB3E77400523A1E /* Assets.xcassets in Resources */,
+				D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C744951FB5570000E82EB6 /* StatusReporter.swift in Sources */,
 				D4D706401FB3E77400523A1E /* ViewController.swift in Sources */,
 				D4D7063E1FB3E77400523A1E /* AppDelegate.swift in Sources */,
 			);
@@ -308,6 +327,7 @@
 			files = (
 				D4D706651FB3E77400523A1E /* NotificationController.swift in Sources */,
 				D4D706671FB3E77400523A1E /* ComplicationController.swift in Sources */,
+				D4C744961FB5570000E82EB6 /* StatusReporter.swift in Sources */,
 				D4D706631FB3E77400523A1E /* ExtensionDelegate.swift in Sources */,
 				D4D706611FB3E77400523A1E /* InterfaceController.swift in Sources */,
 			);
@@ -545,10 +565,11 @@
 				DEVELOPMENT_TEAM = 8CGP6WZ39B;
 				INFOPLIST_FILE = "DEW 7/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.klebeian.DEW-7";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -563,7 +584,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.klebeian.DEW-7";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

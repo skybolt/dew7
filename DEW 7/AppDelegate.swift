@@ -7,14 +7,46 @@
 //
 
 import UIKit
+import WatchConnectivity
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
+    
+    func setupWatchConnectivity() {
+        if WCSession.isSupported() {
+            let session  = WCSession.default
+            session.delegate = self
+            session.activate()
+        }
+    }
+    
+    // 1
+    func sessionDidBecomeInactive(_ session: WCSession) {
+//        print("WC Session did become inactive")
+    }
+    
+    // 2
+    func sessionDidDeactivate(_ session: WCSession) {
+//        print("WC Session did deactivate")
+        WCSession.default.activate()
+    }
+    
+    // 3
+    func session(_ session: WCSession, activationDidCompleteWith
+        activationState: WCSessionActivationState, error: Error?) {
+        if let error = error {
+            print("WC Session activation failed with error: " + "\(error.localizedDescription)")
+            return
+        }
+//        print("WC Session activated with state: " +  "\(activationState.rawValue)")
+    }
+    
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        setupWatchConnectivity()
         // Override point for customization after application launch.
         return true
     }

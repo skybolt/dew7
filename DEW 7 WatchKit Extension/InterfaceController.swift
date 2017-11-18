@@ -11,21 +11,57 @@ import Foundation
 
 
 class InterfaceController: WKInterfaceController {
-
-    override func awake(withContext context: Any?) {
-        super.awake(withContext: context)
+    
+    @IBOutlet var disconnectDEWImage: WKInterfaceImage!
+    
+    @IBOutlet var connectDEWImage: WKInterfaceImage!
+    
+    
+    func showDisconnectedImage() {
         
-        // Configure interface objects here.
+    }
+    
+//    func globalFor() {
+//        for variable in globalVars {
+//
+//        }
+//    }
+    
+    func printGlobalVars() {
+        //        for each in globalVars
+        print("\(globalVars.textString)")
+        print("\(globalVars.shortString)")
+        print("\(globalVars.connectionStatus)")
+        print("\(globalVars.stringColor)")
+    }
+
+    @IBAction func checkStatusAction() {
+        globalVars.labelString = "checking"
+//        printGlobalVars()
+        StatusReporter.isReachableNoReturn()
+        statusLabel.setText(globalVars.labelString)
+        if StatusReporter.isReachableStatic() == true {
+            connectDEWImage.setHidden(false)
+            disconnectDEWImage.setHidden(true)
+        } else {
+            connectDEWImage.setHidden(true)
+            disconnectDEWImage.setHidden(false)
+        }
+    }
+    
+    @IBOutlet var statusLabel: WKInterfaceLabel!
+    
+    override func awake(withContext context: Any?) {
+        print("awake withContext")
+        super.awake(withContext: context)
     }
     
     override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
+        checkStatusAction()
         super.willActivate()
     }
     
     override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-
 }

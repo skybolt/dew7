@@ -1,0 +1,12 @@
+{
+  "supported complication families" : {
+    "7" : "C64D748B-D187-453C-B7C3-F4C70523AC6D.json",
+    "3" : "38301DB4-F3DD-484C-8690-BE735EE962AE.json",
+    "4" : "F0698522-09D3-4F48-A839-784D713D4554.json",
+    "0" : "ABB5005B-8F25-4C37-8E40-8455EC81CB06.json",
+    "1" : "0B7E48E8-9DDE-429F-BD53-4193AB232290.json",
+    "6" : "2F741519-2BBD-4DBF-A124-ECCD5FA9F63A.json",
+    "2" : "FDD0614F-C59F-436E-98AD-BB91504C612F.json"
+  },
+  "client ID" : "com.klebeian.DEW-7.watchkitapp.watchkitextension"
+}
