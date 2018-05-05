@@ -12,6 +12,58 @@ import WatchConnectivity
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     
+    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
+        return "\(file):\(line) : \(function)"
+    }
+    
+        func sendPhoneHeartbeatNotificationToWatch(_ notification: Notification) {
+            if WCSession.isSupported() {
+                let status = "connected"
+                let session = WCSession.default
+                if session.isWatchAppInstalled {
+                    do {
+                        let dictionary = ["status": status]
+                        try session.updateApplicationContext(dictionary)
+                    } catch {
+                        print("ERROR: \(error)")
+                    }
+    
+                }
+                
+            }
+    }
+    
+    func sendPhoneHeartbeatToWatch() {
+        //this function is to alert the watch that it's still connected
+        //the watch will periodically check to see if it's recieved this message
+        //in a timely manner, and if not, conclude it's disconnected
+        //this broken approach is necessary becuase the watch keeps updating its status
+        //when the app closes (as a change state event) it caoncludes it's not connected, when it is
+        print(debug())
+        if WCSession.isSupported() {
+            let status = "connected"
+            let session = WCSession.default
+            if session.isWatchAppInstalled {
+                do {
+                    let dictionary = ["status": status]
+                    try session.updateApplicationContext(dictionary); print("try yes")
+                } catch {
+                    print("ERROR: \(error)")
+                }
+                
+            }
+            
+        }
+    }
+    
+    private func setupNotificationCenter() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(forName: NSNotification.Name("status"), object: nil, queue: nil) { (notification:Notification) -> Void in
+            self.sendPhoneHeartbeatNotificationToWatch(notification)
+        }
+    }
+
+    
     func setupWatchConnectivity() {
         if WCSession.isSupported() {
             let session  = WCSession.default
@@ -22,12 +74,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     
     // 1
     func sessionDidBecomeInactive(_ session: WCSession) {
-//        print("WC Session did become inactive")
+        print("phone WC Session did become inactive")
     }
     
     // 2
     func sessionDidDeactivate(_ session: WCSession) {
-//        print("WC Session did deactivate")
+        print("phone WC Session did deactivate")
         WCSession.default.activate()
     }
     
@@ -38,15 +90,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
             print("WC Session activation failed with error: " + "\(error.localizedDescription)")
             return
         }
-//        print("WC Session activated with state: " +  "\(activationState.rawValue)")
+        print("WC Session activated with state: " + "\(activationState.rawValue)")
     }
-    
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         setupWatchConnectivity()
+        setupNotificationCenter()
         // Override point for customization after application launch.
         return true
     }
@@ -66,6 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        sendPhoneHeartbeatToWatch()
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 

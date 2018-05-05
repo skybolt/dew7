@@ -7,6 +7,7 @@
 //
 
 import WatchKit
+import WatchConnectivity
 import Foundation
 
 
@@ -16,16 +17,21 @@ class InterfaceController: WKInterfaceController {
     
     @IBOutlet var connectDEWImage: WKInterfaceImage!
     
+    @IBOutlet var initialDEWImage: WKInterfaceImage!
+    
+    @IBOutlet var statusLabel: WKInterfaceLabel!
+    
+    @IBOutlet var refreshButtonImage: WKInterfaceImage!
+    static var buttonImageHolder = UIImage(named: "blackDEW") //"UIImage here. Not know how to call."
+
+    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
+        return "\(file):\(line) : \(function)"
+    }
+    
     
     func showDisconnectedImage() {
         
     }
-    
-//    func globalFor() {
-//        for variable in globalVars {
-//
-//        }
-//    }
     
     func printGlobalVars() {
         //        for each in globalVars
@@ -34,34 +40,84 @@ class InterfaceController: WKInterfaceController {
         print("\(globalVars.connectionStatus)")
         print("\(globalVars.stringColor)")
     }
-
-    @IBAction func checkStatusAction() {
-        globalVars.labelString = "checking"
-//        printGlobalVars()
-        StatusReporter.isReachableNoReturn()
+    
+    func loadInitialStatus() {
+        print(debug())
         statusLabel.setText(globalVars.labelString)
-        if StatusReporter.isReachableStatic() == true {
-            connectDEWImage.setHidden(false)
+        
+        //        if StatusReporter.isReachableStatic() == true {
+        if globalVars.textString == "connected" {
+//            connectDEWImage.setHidden(false)
             disconnectDEWImage.setHidden(true)
         } else {
             connectDEWImage.setHidden(true)
-            disconnectDEWImage.setHidden(false)
+//            disconnectDEWImage.setHidden(false)
         }
+        initialDEWImage.setHidden(true)
+        
+    }
+
+    @IBAction func checkStatusAction() {
+        print(debug())
+        animateText()
+        StatusReporter.isReachableNoReturn()
+        statusLabel.setText(globalVars.labelString)
+        refreshButtonImage.setImageNamed(globalVars.statusBitmap)
+        
+//        if globalVars.textString == "connected" {
+////            connectDEWImage.setHidden(false)
+//            disconnectDEWImage.setHidden(true)
+//        } else {
+//            connectDEWImage.setHidden(true)
+////            disconnectDEWImage.setHidden(false)
+//        }
+//        initialDEWImage.setHidden(true)
     }
     
-    @IBOutlet var statusLabel: WKInterfaceLabel!
+    func animateText() {
+//        statusLabel.setText(globalVars.labelString)
+        print("checking ...")
+        statusLabel.setText("checking ...")
+//        sleep(1)
+        print("slept 1")
+    }
+    
+    @IBAction func refreshButton() {
+        print(debug())
+        animateText()
+        connectDEWImage.setHidden(true)
+        disconnectDEWImage.setHidden(true)
+        initialDEWImage.setHidden(false)
+        //sleep(1)
+        checkStatusAction()
+    }
+    
+    
+    @IBAction func graphicRefreshButton() {
+        print(debug())
+        checkStatusAction()
+    }
     
     override func awake(withContext context: Any?) {
-        print("awake withContext")
+        print(debug())
         super.awake(withContext: context)
     }
     
     override func willActivate() {
+        print(debug())
+        let session = WCSession.default
+        print("session.activationState = ", terminator: "")
+        print(session.activationState.rawValue)
+        globalVars.counter += 1
         checkStatusAction()
-        super.willActivate()
+//        super.willActivate()
+        
     }
     
     override func didDeactivate() {
+        print(debug())
+                let complicationsController = ComplicationController()
+                complicationsController.reloadOrExtendData()
         super.didDeactivate()
     }
 }

@@ -23,29 +23,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DEW Dark" translatesAutoresizingMaskIntoConstraints="NO" id="BVE-8g-UHw">
-                                <rect key="frame" x="67" y="84" width="240" height="240"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distant Early Warning" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ye-SJ-Cda">
-                                <rect key="frame" x="-63" y="323" width="502" height="100"/>
+                                <rect key="frame" x="-63" y="301" width="502" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="31"/>
                                 <color key="textColor" red="0.99404761904761907" green="0.98809523809523814" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgE-Dp-5JG">
-                                <rect key="frame" x="16" y="389" width="343" height="229"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgE-Dp-5JG">
+                                <rect key="frame" x="16" y="374" width="343" height="273"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <mutableString key="text">During the Cold War between NATO aand the Warsaw Pact, it was feared the Soviet Union could launch a nuclear strike against the United States before the United States had a chance to react. 
+                                <mutableString key="text">The year was 1958, near the height of the Cold War. The USA and USSR could destroy each many times over using ICBMs that could not be detected until it was too late. 
 
-Today, you might leavve your phone behind at a restaurant, and not realize it until long after you've had a chance to react. 
+The year is 2018, near the height of the Culture Wars. You rely on your iPhone and Apple Watch. But, you might leave your phone behind in a coffee shop, and not notice until it was too late. 
 
-The solution to both problems is the same: Warn people in enough time to take appropriate action. It is your choice to respond with nuclear anhillation or to and get your phone, it's our job to provide the warning. </mutableString>
+The answer to both problems is to create an early warning system that notifies you if your phone has disconnected from your watch, or if enemy ICBMs are coming over the North Pole as part of a nuclear First Strike. In 1958, the US government created what ultimately became known as the Distant Early Warning, or D.E.W. Line. 
+</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.99404761904761907" green="0.98809523809523814" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="DEW Dark" translatesAutoresizingMaskIntoConstraints="NO" id="BVE-8g-UHw">
+                                <rect key="frame" x="67" y="70" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="Uee-0j-aNJ"/>

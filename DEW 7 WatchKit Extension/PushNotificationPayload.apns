@@ -4,7 +4,7 @@
             "body": "Test message",
             "title": "Optional title"
         },
-        "category": "myCategory",
+        "category": "dewNotifications",
         "thread-id":"5280"
     },
     

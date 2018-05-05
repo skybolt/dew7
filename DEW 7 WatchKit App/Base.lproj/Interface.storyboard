@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13529" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14109" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
     <device id="watch38" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="watchOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="14031"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -14,9 +14,23 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="DEW_7_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <label alignment="center" verticalAlignment="center" text="D.E.W. status" textAlignment="center" numberOfLines="4" id="WT5-rn-Ftd"/>
-                        <imageView width="100" height="100" alignment="center" hidden="YES" image="redDew" id="trx-Ol-gy2"/>
+                        <button alignment="left" id="SGp-9C-EHa" userLabel="Graphic Button">
+                            <group key="contentGroup" width="1" alignment="left" id="pE1-TF-4Mz">
+                                <items>
+                                    <imageView width="100" height="100" alignment="center" verticalAlignment="bottom" image="blackDew" id="zKd-9N-eak" userLabel="RefreshButtonImage"/>
+                                </items>
+                            </group>
+                            <connections>
+                                <action selector="graphicRefreshButton" destination="AgC-eL-Hgc" id="tYS-uP-EDM"/>
+                            </connections>
+                        </button>
+                        <label alignment="center" verticalAlignment="center" textAlignment="center" numberOfLines="4" id="WT5-rn-Ftd">
+                            <string key="text">D.E.W.
+connection status</string>
+                        </label>
                         <imageView width="100" height="100" alignment="center" hidden="YES" image="blueDew" id="9ww-yX-M1f"/>
+                        <imageView width="100" height="100" alignment="center" hidden="YES" image="redDew" id="trx-Ol-gy2"/>
+                        <imageView width="100" height="100" alignment="center" hidden="YES" image="blackDew" id="iOp-8h-8cG" userLabel="initialDEW image"/>
                     </items>
                     <menu key="menu" id="E8V-h9-O4f">
                         <items>
@@ -30,34 +44,36 @@
                     <connections>
                         <outlet property="connectDEWImage" destination="9ww-yX-M1f" id="1fU-cD-yPA"/>
                         <outlet property="disconnectDEWImage" destination="trx-Ol-gy2" id="shI-Lr-tjw"/>
+                        <outlet property="initialDEWImage" destination="iOp-8h-8cG" id="tGM-i2-KkG"/>
+                        <outlet property="refreshButtonImage" destination="zKd-9N-eak" id="Ocf-P9-YhF"/>
                         <outlet property="statusLabel" destination="WT5-rn-Ftd" id="dwA-Zv-wgM"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="345"/>
+            <point key="canvasLocation" x="220" y="344"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
             <objects>
                 <notificationController id="YCC-NB-fut">
                     <items>
-                        <label alignment="left" text="Alert Label" id="IdU-wH-bcW"/>
+                        <label alignment="center" text="Alert Label" textAlignment="center" numberOfLines="0" id="IdU-wH-bcW"/>
                     </items>
-                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <notificationCategory key="notificationCategory" identifier="dewNotifications" id="JfB-70-Muf"/>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
-                        <segue destination="4sK-HA-Art" kind="relationship" relationship="dynamicNotificationInterface" id="kXh-Jw-8B1"/>
+                        <segue destination="VCl-hF-Hmh" kind="relationship" relationship="dynamicNotificationInterface" id="XGf-UW-vRJ"/>
                     </connections>
                 </notificationController>
             </objects>
             <point key="canvasLocation" x="220" y="643"/>
         </scene>
-        <!--Notification Controller-->
-        <scene sceneID="ZPc-GJ-vnh">
+        <!--Dynamic Notification Interface Controller-->
+        <scene sceneID="l31-Y4-8QQ">
             <objects>
-                <controller id="4sK-HA-Art" customClass="NotificationController" customModule="DEW_7_WatchKit_App" customModuleProvider="target"/>
+                <controller id="VCl-hF-Hmh"/>
             </objects>
-            <point key="canvasLocation" x="468" y="643"/>
+            <point key="canvasLocation" x="520" y="643"/>
         </scene>
     </scenes>
 </document>
