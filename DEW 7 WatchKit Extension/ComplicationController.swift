@@ -10,12 +10,12 @@ import ClockKit
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
-    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
-        return "\(file):\(line) : \(function)"
-    }
+//    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
+//        return "\(file):\(line) : \(function)"
+//    }
     
     func reloadOrExtendData() {
-        print(debug())
+        print(StatusReporter.debug())
         // 1
         let server = CLKComplicationServer.sharedInstance()
         guard let complications = server.activeComplications,
@@ -28,12 +28,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Configuration
     func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
         handler([.forward, .backward])
+        print(StatusReporter.debug())
     }
     
 
     // MARK: - Timeline Population
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        
+        print(StatusReporter.debug())
         if complication.family == .utilitarianSmall {
 //            print("utilSmall")
             let smallFlat = CLKComplicationTemplateUtilitarianSmallFlat()
@@ -83,6 +84,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - Placeholder Templates
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
+        print(StatusReporter.debug())
         if complication.family == .utilitarianSmall {
             let smallFlat = CLKComplicationTemplateUtilitarianSmallFlat()
             smallFlat.textProvider = CLKSimpleTextProvider(text: "int")

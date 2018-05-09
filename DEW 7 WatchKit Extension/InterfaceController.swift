@@ -9,6 +9,7 @@
 import WatchKit
 import WatchConnectivity
 import Foundation
+import UserNotifications
 
 
 class InterfaceController: WKInterfaceController {
@@ -24,10 +25,9 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var refreshButtonImage: WKInterfaceImage!
     static var buttonImageHolder = UIImage(named: "blackDEW") //"UIImage here. Not know how to call."
 
-    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
-        return "\(file):\(line) : \(function)"
-    }
-    
+//    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
+//        return "\(file):\(line) : \(function)"
+//    }
     
     func showDisconnectedImage() {
         
@@ -42,7 +42,7 @@ class InterfaceController: WKInterfaceController {
     }
     
     func loadInitialStatus() {
-        print(debug())
+        print(StatusReporter.debug())
         statusLabel.setText(globalVars.labelString)
         
         //        if StatusReporter.isReachableStatic() == true {
@@ -58,7 +58,7 @@ class InterfaceController: WKInterfaceController {
     }
 
     @IBAction func checkStatusAction() {
-        print(debug())
+        print(StatusReporter.debug())
         animateText()
         StatusReporter.isReachableNoReturn()
         statusLabel.setText(globalVars.labelString)
@@ -79,11 +79,11 @@ class InterfaceController: WKInterfaceController {
         print("checking ...")
         statusLabel.setText("checking ...")
 //        sleep(1)
-        print("slept 1")
+//        print("slept 1")
     }
     
     @IBAction func refreshButton() {
-        print(debug())
+        print(StatusReporter.debug())
         animateText()
         connectDEWImage.setHidden(true)
         disconnectDEWImage.setHidden(true)
@@ -94,17 +94,19 @@ class InterfaceController: WKInterfaceController {
     
     
     @IBAction func graphicRefreshButton() {
-        print(debug())
+        print(StatusReporter.debug())
         checkStatusAction()
     }
     
     override func awake(withContext context: Any?) {
-        print(debug())
+        print(StatusReporter.debug())
         super.awake(withContext: context)
+        registerUserNotificationSettings()
+//        scheduleLocalNotification()
     }
     
     override func willActivate() {
-        print(debug())
+        print(StatusReporter.debug())
         let session = WCSession.default
         print("session.activationState = ", terminator: "")
         print(session.activationState.rawValue)
@@ -115,9 +117,108 @@ class InterfaceController: WKInterfaceController {
     }
     
     override func didDeactivate() {
-        print(debug())
-                let complicationsController = ComplicationController()
-                complicationsController.reloadOrExtendData()
+        print(StatusReporter.debug())
+//                let complicationsController = ComplicationController()
+//                complicationsController.reloadOrExtendData()
+//        scheduleLocalNotification()
         super.didDeactivate()
+    }
+    
+}
+
+
+extension InterfaceController {
+    
+    func registerUserNotificationSettings() {
+        print(StatusReporter.debug())
+        UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (granted, error) in
+            if granted {
+                let viewDewAction = UNNotificationAction(identifier: "viewDewAction", title: "Check Status", options: .foreground)
+                let dewCategory = UNNotificationCategory(identifier: "dewNotifications", actions: [viewDewAction], intentIdentifiers: [], options: [])
+                UNUserNotificationCenter.current().setNotificationCategories([dewCategory])
+                UNUserNotificationCenter.current().delegate = self
+                print("⌚️⌚️⌚️Successfully registered notification support")
+            } else {
+                print("⌚️⌚️⌚️ERROR: \(String(describing: error?.localizedDescription))")
+            }
+        }
+    }
+
+    
+    static func stringWithUUID() -> String {
+        let uuidObj = CFUUIDCreate(nil)
+        let uuidString = CFUUIDCreateString(nil, uuidObj)!
+        return uuidString as String
+    }
+    
+    
+    static func scheduleLocalNotification() {
+        
+        print(StatusReporter.debug())
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.alertSetting == .enabled {
+                
+//                let dewImageName = String(format: "cat images/local_cat%02d", arguments: [Int.randomInt(1, max: 3)])
+//                let dewImageURL = Bundle.main.url(forResource: dewImageName, withExtension: "jpg")
+//                let notificationAttachment = try! UNNotificationAttachment(identifier: dewImageName, url: dewImageURL!, options: .none)
+                
+                
+                //configure local notification in four steps from https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/SchedulingandHandlingLocalNotifications.html#//apple_ref/doc/uid/TP40008194-CH5-SW1
+                
+                //step 1 of four, Create and configure a UNMutableNotificationContent object with the notification details.
+                let notificationContent = UNMutableNotificationContent()
+                notificationContent.title = "title"
+                notificationContent.subtitle = "subtitle"
+//                notificationContent.body = "content body"
+                notificationContent.body = globalVars.textString
+                notificationContent.sound = UNNotificationSound.default();
+                notificationContent.categoryIdentifier = "dewCategory"
+//                notificationContent.attachments = [notificationAttachment]
+                
+                var date = DateComponents()
+                date.minute = 12
+                // step 2 of four Create a UNCalendarNotificationTrigger, UNTimeIntervalNotificationTrigger, or UNLocationNotificationTrigger object to describe the conditions under which the notification is delivered.
+//                let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+//                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: ((1*60)-0), repeats: true)
+                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
+//                let notificationTrigger = UNNotificationTrigger(now)
+                
+                //step 3 of four: Create a UNNotificationRequest object with the content and trigger information.
+                let identifier = self.stringWithUUID()
+                print("identifier = ", terminator: "")
+                print(identifier)
+//
+//                let notificationRequest = UNNotificationRequest(identifier: "dew", content: notificationContent, trigger: notificationTrigger)
+                let notificationRequest = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: notificationTrigger)
+
+                //step 4 of four: Call the addNotificationRequest:withCompletionHandler: method to schedule the notification; see Scheduling Local Notifications for Delivery
+                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+                    if let error = error {
+                        print("⌚️⌚️⌚️ERROR:\(error.localizedDescription)")
+                    } else {
+                        print(Date().description(with: Locale.current))
+                        print("⌚️⌚️⌚️Local notification was scheduled for ")
+                        print(notificationTrigger)
+                    }
+                }
+                
+            } else { //end if settings.alertSetting
+                print("⌚️⌚️⌚️Notification alerts are disabled")
+            }
+            
+        }
+    }
+}
+
+// Notification Center Delegate
+extension InterfaceController: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print(StatusReporter.debug())
+        completionHandler([.sound, .alert])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print(StatusReporter.debug())
+        completionHandler()
     }
 }

@@ -23,6 +23,9 @@
 		D4D706631FB3E77400523A1E /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */; };
 		D4D706651FB3E77400523A1E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706641FB3E77400523A1E /* NotificationController.swift */; };
 		D4D706671FB3E77400523A1E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706661FB3E77400523A1E /* ComplicationController.swift */; };
+		D4DDD52F20A10E17002CBC64 /* local_cat01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4DDD51B20A10E16002CBC64 /* local_cat01.jpg */; };
+		D4DDD53020A10E17002CBC64 /* local_cat03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4DDD51C20A10E16002CBC64 /* local_cat03.jpg */; };
+		D4DDD53B20A10E17002CBC64 /* local_cat02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4DDD52720A10E17002CBC64 /* local_cat02.jpg */; };
 		D4E68C921FBF7BBB0054274A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E68C911FBF7BBB0054274A /* Assets.xcassets */; };
 		D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E68C911FBF7BBB0054274A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -90,6 +93,9 @@
 		D4D706661FB3E77400523A1E /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		D4D7066A1FB3E77400523A1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4D7066B1FB3E77400523A1E /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		D4DDD51B20A10E16002CBC64 /* local_cat01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = local_cat01.jpg; sourceTree = "<group>"; };
+		D4DDD51C20A10E16002CBC64 /* local_cat03.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = local_cat03.jpg; sourceTree = "<group>"; };
+		D4DDD52720A10E17002CBC64 /* local_cat02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = local_cat02.jpg; sourceTree = "<group>"; };
 		D4E68C911FBF7BBB0054274A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,6 +173,7 @@
 		D4D7065F1FB3E77400523A1E /* DEW 7 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				D4E3F7D120A10C33008F7B55 /* cat images */,
 				D4D706601FB3E77400523A1E /* InterfaceController.swift */,
 				D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */,
 				D4D706641FB3E77400523A1E /* NotificationController.swift */,
@@ -176,6 +183,16 @@
 				D4D7066B1FB3E77400523A1E /* PushNotificationPayload.apns */,
 			);
 			path = "DEW 7 WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		D4E3F7D120A10C33008F7B55 /* cat images */ = {
+			isa = PBXGroup;
+			children = (
+				D4DDD51B20A10E16002CBC64 /* local_cat01.jpg */,
+				D4DDD52720A10E17002CBC64 /* local_cat02.jpg */,
+				D4DDD51C20A10E16002CBC64 /* local_cat03.jpg */,
+			);
+			path = "cat images";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,7 +321,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4DDD53020A10E17002CBC64 /* local_cat03.jpg in Resources */,
 				D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */,
+				D4DDD52F20A10E17002CBC64 /* local_cat01.jpg in Resources */,
+				D4DDD53B20A10E17002CBC64 /* local_cat02.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,7 +446,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -479,7 +499,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

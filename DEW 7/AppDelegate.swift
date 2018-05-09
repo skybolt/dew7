@@ -9,12 +9,19 @@
 import UIKit
 import WatchConnectivity
 
+//extension Int {
+//    static func randomInt(_ min: Int, max:Int) -> Int {
+//        return min + Int(arc4random_uniform(UInt32(max - min + 1)))
+//    }
+//}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
+
     
-    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
-        return "\(file):\(line) : \(function)"
-    }
+//    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
+//        return "\(file):\(line) : \(function)"
+//    }
     
         func sendPhoneHeartbeatNotificationToWatch(_ notification: Notification) {
             if WCSession.isSupported() {
@@ -39,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         //in a timely manner, and if not, conclude it's disconnected
         //this broken approach is necessary becuase the watch keeps updating its status
         //when the app closes (as a change state event) it caoncludes it's not connected, when it is
-        print(debug())
+        print(StatusReporter.debug())
         if WCSession.isSupported() {
             let status = "connected"
             let session = WCSession.default
@@ -68,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         if WCSession.isSupported() {
             let session  = WCSession.default
             session.delegate = self
-            session.activate()
+//            session.activate() //this was set to activate, check to see if this was my idiotic idea to create an inffinite loop or if this is required or by design
         }
     }
     

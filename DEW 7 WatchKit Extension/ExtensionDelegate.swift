@@ -8,15 +8,22 @@
 
 import WatchKit
 import WatchConnectivity
+import UserNotifications
 
 /* the reason we have an extension delegae is there needs to be a cointainer to hold the executable functions. Unlike an interface controiller an extension delegate might be able to do more robust things, that explain why I have a
  static var oldStatus = Bool(false) in an extenkjsion deleghate but not interface controller. Because the interface controller is ligheter. No advanced fguctions required or allowed*/
 
+extension Int {
+    static func randomInt(_ min: Int, max:Int) -> Int {
+        return min + Int(arc4random_uniform(UInt32(max - min + 1)))
+    }
+}
+
 class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
-    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
-        return "\(file):\(line) : \(function)"
-    }
+//    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
+//        return "\(file):\(line) : \(function)"
+//    }
     
     func updateComplicationDisplay() {
         let complicationsController = ComplicationController()
@@ -51,7 +58,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     func setupWatchConnectivity() {
-        print(debug())
+        print(StatusReporter.debug())
         if WCSession.isSupported() {
             let session  = WCSession.default
             session.delegate = self
@@ -71,13 +78,17 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
 //        print("\(globalVars.stringColor)")
     }
     
+    
+    
     func sessionReachabilityDidChange(_ wSession: WCSession) {
-//        print(debug())
+        print(StatusReporter.debug())
         StatusReporter.isReachableNoReturn()
 //        globalVars.textString = "didChange"
         updateComplicationDisplay()
         let backgroundTask = WKApplicationRefreshBackgroundTask()
         reloadComplicationData(backgroundTask: backgroundTask)
+//        scheduleLocalNotification()
+        InterfaceController.scheduleLocalNotification()
     }
 
     func applicationDidFinishLaunching() {
@@ -86,25 +97,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     func applicationDidBecomeActive() {
-//        print(debug())
-////        print("applicationDidBecomeActive")
-//        let phoneSession = WCSession.default
-//        print(self)
-//        print(String(phoneSession.isReachable))
-//        StatusReporter.isReachableNoReturn()
-//        print("phoneSession.activationState = ", terminator: "")
-//        print(phoneSession.activationState.rawValue)
-//
-//        printGlobalVars()
-////        updateComplicationDisplay()
-//        printGlobalVars()
-//        let backgroundTask = WKApplicationRefreshBackgroundTask()
-//        reloadComplicationData(backgroundTask: backgroundTask)
+        print(StatusReporter.debug())
+
     }
 
-    func applicationWillResignActive() {
-//        print(debug())
-//        print("applicationWillResignActive")
+    func applicationWillResignActive() {        
+        print(StatusReporter.debug())
 //        updateComplicationDisplay()
     }
 
@@ -169,7 +167,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveApplicationContext
         applicationContext:[String:Any]) {
-        print(debug())
+        print(StatusReporter.debug())
         // 2
         if let status = applicationContext["status"] as? [String] {
             print("status is \(status)")
@@ -187,3 +185,5 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     } //end of func session
     
 }
+
+

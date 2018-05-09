@@ -62,16 +62,27 @@ connection status</string>
                     <notificationCategory key="notificationCategory" identifier="dewNotifications" id="JfB-70-Muf"/>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
-                        <segue destination="VCl-hF-Hmh" kind="relationship" relationship="dynamicNotificationInterface" id="XGf-UW-vRJ"/>
+                        <segue destination="9YI-ra-d9D" kind="relationship" relationship="dynamicNotificationInterface" id="nsF-tH-ScF"/>
                     </connections>
                 </notificationController>
             </objects>
             <point key="canvasLocation" x="220" y="643"/>
         </scene>
-        <!--Dynamic Notification Interface Controller-->
-        <scene sceneID="l31-Y4-8QQ">
+        <!--Notification Controller-->
+        <scene sceneID="sNZ-Ga-iwL">
             <objects>
-                <controller id="VCl-hF-Hmh"/>
+                <controller id="9YI-ra-d9D" customClass="NotificationController" customModule="DEW_7_WatchKit_App">
+                    <items>
+                        <label alignment="center" text="&lt;message&gt;" numberOfLines="0" id="aY4-ff-7ZM">
+                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                        </label>
+                        <imageView alignment="center" image="DEW Dark" contentMode="scaleAspectFill" id="Rcm-CJ-BJJ"/>
+                    </items>
+                    <connections>
+                        <outlet property="image" destination="Rcm-CJ-BJJ" id="Oou-kN-J5W"/>
+                        <outlet property="label" destination="aY4-ff-7ZM" id="XXW-R4-ApD"/>
+                    </connections>
+                </controller>
             </objects>
             <point key="canvasLocation" x="520" y="643"/>
         </scene>

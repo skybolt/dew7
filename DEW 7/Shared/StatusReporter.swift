@@ -27,17 +27,15 @@ final class StatusReporter: NSObject {
         return WCSession.default.isReachable
     }
     
-    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
+    static func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
         return "\(file):\(line) : \(function)"
     }
     
 
     static func isReachableNoReturn() {
-        print("isReachableNoReturn()")
-//        print("isReachableNoReturn()")
-//        print(globalVars.counter)
-//        globalVars.counter += 1
-//        print(globalVars.counter)
+        print(Date().description(with: Locale.current))
+        print(debug())
+
         if WCSession.default.isReachable == true {
             globalVars.textString = "connected"
             globalVars.shortString = "DEW"

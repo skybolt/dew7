@@ -12,27 +12,28 @@ import UserNotifications
 
 
 class NotificationController: WKUserNotificationInterfaceController {
-
-    override init() {
-        super.init()
-    }
-
-    override func willActivate() {
-        super.willActivate()
-    }
-
-    override func didDeactivate() {
-        super.didDeactivate()
-    }
-
-    /*
-    override func didReceive(_ notification: UNNotification, withCompletion completionHandler: @escaping (WKUserNotificationInterfaceType) -> Swift.Void) {
-        // This method is called when a notification needs to be presented.
-        // Implement it if you use a dynamic notification interface.
-        // Populate your dynamic notification interface as quickly as possible.
-        //
-        // After populating your dynamic notification interface call the completion block.
+    
+    // 2
+    @IBOutlet var label: WKInterfaceLabel!
+    @IBOutlet var image: WKInterfaceImage!
+    
+    // 1
+    override func didReceive(_ notification: UNNotification, withCompletion completionHandler:
+        @escaping (WKUserNotificationInterfaceType) -> Void) {
+        // 2
+        let notificationBody = notification.request.content.body
+        label.setText(notificationBody)
+        // 3
+        if let imageAttachment = notification.request.content.attachments.first {
+            let imageURL = imageAttachment.url
+            let imageData = try! Data(contentsOf: imageURL)
+            let newImage = UIImage(data: imageData)
+            image.setImage(newImage)
+        } else {
+            let catImageName = String(format: "cat%02d", arguments: [Int.randomInt(1, max: 12)])
+            image.setImageNamed(catImageName)
+        }
+        // 4
         completionHandler(.custom)
     }
-    */
 }

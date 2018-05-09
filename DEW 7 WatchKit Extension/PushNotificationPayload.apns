@@ -1,8 +1,8 @@
 {
     "aps": {
         "alert": {
-            "body": "Test message",
-            "title": "Optional title"
+            "title": "Optional title",
+            "body": "local JSON"
         },
         "category": "dewNotifications",
         "thread-id":"5280"
@@ -10,7 +10,7 @@
     
     "WatchKit Simulator Actions": [
         {
-            "title": "First Button",
+            "title": "Open",
             "identifier": "firstButtonAction"
         }
     ],
