@@ -29,6 +29,8 @@ class InterfaceController: WKInterfaceController {
 //        return "\(file):\(line) : \(function)"
 //    }
     
+    //added comment to test gitHub integration
+    
     func showDisconnectedImage() {
         
     }
