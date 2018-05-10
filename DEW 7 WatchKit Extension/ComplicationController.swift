@@ -69,7 +69,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let modLarge = CLKComplicationTemplateModularLargeStandardBody()
             modLarge.headerTextProvider = CLKSimpleTextProvider(text: globalVars.textString)
             modLarge.headerTextProvider.tintColor = globalVars.stringColor
-            modLarge.body1TextProvider = CLKSimpleTextProvider(text: globalVars.labelString)
+            modLarge.body1TextProvider = CLKSimpleTextProvider(text: globalVars.notificationString)
+//            modLarge.body2TextProvider = CLKSimpleTextProvider(text: globalVars.debugString)
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: modLarge))
         }
         

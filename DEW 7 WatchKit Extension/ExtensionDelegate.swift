@@ -77,13 +77,17 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         print("\(globalVars.connectionStatus)")
 //        print("\(globalVars.stringColor)")
     }
-    
-    
+
+    func sessionWatchStateDidChange() { //this is designed to run on the phone and alert when the WATCH is gone. Good future feature, but doens't help us detect the phone that's left behind. 
+        globalVars.debugString = "watchChange"
+        InterfaceController.scheduleLocalNotification()
+    }
     
     func sessionReachabilityDidChange(_ wSession: WCSession) {
+        
+//        globalVars.debugString = "sessionChange"
         print(StatusReporter.debug())
         StatusReporter.isReachableNoReturn()
-//        globalVars.textString = "didChange"
         updateComplicationDisplay()
         let backgroundTask = WKApplicationRefreshBackgroundTask()
         reloadComplicationData(backgroundTask: backgroundTask)

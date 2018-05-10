@@ -167,10 +167,11 @@ extension InterfaceController {
                 
                 //step 1 of four, Create and configure a UNMutableNotificationContent object with the notification details.
                 let notificationContent = UNMutableNotificationContent()
-                notificationContent.title = "title"
-                notificationContent.subtitle = "subtitle"
+                
+//                notificationContent.title = "title"
+//                notificationContent.subtitle = "subtitle"
 //                notificationContent.body = "content body"
-                notificationContent.body = globalVars.textString
+                notificationContent.title = globalVars.notificationString
                 notificationContent.sound = UNNotificationSound.default();
                 notificationContent.categoryIdentifier = "dewCategory"
 //                notificationContent.attachments = [notificationAttachment]

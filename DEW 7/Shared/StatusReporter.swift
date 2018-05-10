@@ -14,6 +14,8 @@ struct globalVars {
     static var textString = "connecting"
     static var shortString = "..."
     static var labelString = "D.E.W. initializing"
+    static var notificationString = "notification string"
+    static var debugString = "debug"
     static var stringColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
     static var statusImage = "connected"
     static var statusBitmap = "blackDew"
@@ -38,22 +40,24 @@ final class StatusReporter: NSObject {
 
         if WCSession.default.isReachable == true {
             globalVars.textString = "connected"
-            globalVars.shortString = "DEW"
+            globalVars.shortString = "OK"
             globalVars.labelString = """
                                     D.E.W. active
                                     phone connected
                                     """
+            globalVars.notificationString = "Phone nearby, DEW active"
             globalVars.stringColor = UIColor(red: 0, green: 1, blue: 0, alpha: 1)
             globalVars.statusImage = "connected"
             globalVars.statusBitmap = "blueDew"
         }
         else {
             globalVars.textString = "disconnected"
-            globalVars.shortString = "DEW"
+            globalVars.shortString = "!"
             globalVars.labelString = """
-                                    D.E.W. not
-                                    connected!
+                                    Phone not
+                                    connected
                                     """
+            globalVars.notificationString = "Phone disconnected! Did you leave it somewhere?"
             globalVars.statusImage = "disconnected"
             globalVars.statusBitmap = "redDew"
             globalVars.stringColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
