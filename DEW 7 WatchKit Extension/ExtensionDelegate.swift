@@ -101,7 +101,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     func applicationDidBecomeActive() {
-        print(StatusReporter.debug())
+//        print(StatusReporter.debug())
+        
 
     }
 
@@ -119,8 +120,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
 //                print("print WKApplicationRefreshBackgroundTask")
-//                updateComplicationDisplay()
-//                StatusReporter.isReachableNoReturn()
+                StatusReporter.isReachableNoReturn()
+                updateComplicationDisplay()
                 // Be sure to complete the background task once you’re done.
                 //let backgroundTask = WKApplicationRefreshBackgroundTask()
 //                reloadComplicationData(backgroundTask: backgroundTask)

@@ -16,7 +16,7 @@ struct globalVars {
     static var labelString = "D.E.W. initializing"
     static var notificationString = "notification string"
     static var debugString = "debug"
-    static var stringColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
+    static var stringColor = UIColor.yellow
     static var statusImage = "connected"
     static var statusBitmap = "blackDew"
     static var connectionStatus = Bool(false)
@@ -46,7 +46,7 @@ final class StatusReporter: NSObject {
                                     phone connected
                                     """
             globalVars.notificationString = "Phone nearby, DEW active"
-            globalVars.stringColor = UIColor(red: 0, green: 1, blue: 0, alpha: 1)
+            globalVars.stringColor = UIColor(red:0.310, green:0.706, blue:0.965, alpha:1.00) //Red:0.310 green:0.706 blue:0.965 alpha:1.00
             globalVars.statusImage = "connected"
             globalVars.statusBitmap = "blueDew"
         }

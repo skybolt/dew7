@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         if WCSession.isSupported() {
             let session  = WCSession.default
             session.delegate = self
-//            session.activate() //this was set to activate, check to see if this was my idiotic idea to create an inffinite loop or if this is required or by design
+            session.activate() //this was set to activate, check to see if this was my idiotic idea to create an inffinite loop or if this is required or by design
         }
     }
     
@@ -94,10 +94,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith
         activationState: WCSessionActivationState, error: Error?) {
         if let error = error {
-            print("WC Session activation failed with error: " + "\(error.localizedDescription)")
+            print("AP Session activation failed with error: " + "\(error.localizedDescription)")
             return
         }
-        print("WC Session activated with state: " + "\(activationState.rawValue)")
+        print("AP Session activated with state: " + "\(activationState.rawValue)")
     }
 
     var window: UIWindow?

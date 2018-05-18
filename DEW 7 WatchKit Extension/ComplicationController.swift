@@ -16,6 +16,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func reloadOrExtendData() {
         print(StatusReporter.debug())
+        
+        print(Date().description(with: Locale.current))
         // 1
         let server = CLKComplicationServer.sharedInstance()
         guard let complications = server.activeComplications,
