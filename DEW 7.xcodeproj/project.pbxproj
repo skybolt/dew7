@@ -133,7 +133,6 @@
 		D4D7063C1FB3E77400523A1E /* DEW 7 */ = {
 			isa = PBXGroup;
 			children = (
-				D4C744941FB5570000E82EB6 /* StatusReporter.swift */,
 				D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */,
 				D4D7063D1FB3E77400523A1E /* AppDelegate.swift */,
 				D4D7063F1FB3E77400523A1E /* ViewController.swift */,
@@ -158,6 +157,7 @@
 		D4D7065F1FB3E77400523A1E /* DEW 7 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				D4C744941FB5570000E82EB6 /* StatusReporter.swift */,
 				D4D706601FB3E77400523A1E /* InterfaceController.swift */,
 				D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */,
 				D4D706641FB3E77400523A1E /* NotificationController.swift */,

@@ -20,7 +20,10 @@ struct globalVars {
     static var stringColor = UIColor.yellow
     static var statusImage = "connected"
     static var statusBitmap = "blackDew"
-    static var connectionStatus = Bool(false)
+    static var newConnectionStatus = Bool(false)
+    static var oldConnectionStatus = Bool(true)
+    static var newStatusString = "nN"
+    static var oldStatusString = "nN"
     static var counter = 0
 }
 
@@ -67,7 +70,7 @@ final class StatusReporter: NSObject {
                                     D.E.W. active
                                     phone connected
                                     """
-            globalVars.notificationString = "Phone connected"
+            globalVars.notificationString = "iPhone connected"
             globalVars.stringColor = UIColor(red:0.310, green:0.706, blue:0.965, alpha:1.00) //Red:0.310 green:0.706 blue:0.965 alpha:1.00
             globalVars.statusImage = "connected"
             globalVars.statusBitmap = "blueDew"
@@ -79,12 +82,12 @@ final class StatusReporter: NSObject {
                                     Phone not
                                     connected
                                     """
-            globalVars.notificationString = "Phone disconnected!"
+            globalVars.notificationString = "Disconnected!"
             globalVars.statusImage = "disconnected"
             globalVars.statusBitmap = "redDew"
             globalVars.stringColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
         }
-        globalVars.connectionStatus = WCSession.default.isReachable
+        globalVars.newConnectionStatus = WCSession.default.isReachable
     }
 }
 

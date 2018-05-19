@@ -34,11 +34,12 @@ connection status</string>
                     </items>
                     <menu key="menu" id="E8V-h9-O4f">
                         <items>
-                            <menuItem title="checkStatus" icon="resume" id="DeJ-2v-R6a" userLabel="checkStatus">
+                            <menuItem title="Check Status" icon="resume" id="DeJ-2v-R6a" userLabel="checkStatus">
                                 <connections>
                                     <action selector="checkStatusAction" destination="AgC-eL-Hgc" id="hZi-9U-s1t"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Debug Info" icon="more" id="a4b-mE-IU2" userLabel="debug"/>
                         </items>
                     </menu>
                     <connections>

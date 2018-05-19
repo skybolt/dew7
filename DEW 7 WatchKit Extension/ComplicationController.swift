@@ -28,12 +28,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
         handler([.forward, .backward])
     }
-    
 
     // MARK: - Timeline Population
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-//        print("complication type = \(complication.family)")
         
+        print(sharedObjects.simpleDebug())
+        print("complication type = \(complication.family)")
         
         if complication.family == .utilitarianSmall {
             print("utilitarianSmall")
@@ -70,7 +70,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         else if complication.family == .modularLarge {
             print("modularLarge")
             let modLarge = CLKComplicationTemplateModularLargeStandardBody()
-            modLarge.headerTextProvider = CLKSimpleTextProvider(text: globalVars.textString)
+//            modLarge.headerTextProvider = CLKSimpleTextProvider(text: globalVars.textString)
+            modLarge.headerTextProvider = CLKSimpleTextProvider(text: "D.E.W. Status")
             modLarge.headerTextProvider.tintColor = globalVars.stringColor
             modLarge.body1TextProvider = CLKSimpleTextProvider(text: globalVars.notificationString)
 //            modLarge.body2TextProvider = CLKSimpleTextProvider(text: globalVars.debugString)
@@ -88,11 +89,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - Placeholder Templates
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
-        print(StatusReporter.debug())
+
+        print(sharedObjects.simpleDebug())
         print("complication type = \(complication.family)")
         
         if complication.family == .utilitarianSmall {
-            print("modularSmall")
+            print("utilitarianSmall")
             let smallFlat = CLKComplicationTemplateUtilitarianSmallFlat()
             smallFlat.textProvider = CLKSimpleTextProvider(text: "int")
             smallFlat.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
@@ -100,14 +102,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
 
         else if complication.family == .utilitarianLarge {
-            print("modularSmall")
+            print("utilitarianLarge")
             let largeFlat = CLKComplicationTemplateUtilitarianLargeFlat()
             largeFlat.textProvider = CLKSimpleTextProvider(text: "installed", shortText:globalVars.shortString)
             handler(largeFlat)
         }
             
         else if complication.family == .circularSmall {
-            print("modularSmall")
+            print("circularSmall")
             let circSmall = CLKComplicationTemplateCircularSmallSimpleImage()
             circSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
 //            let circSmall = CLKComplicationTemplateCircularSmallStackImage()

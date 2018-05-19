@@ -22,23 +22,52 @@ extension Int {
 class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func applicationDidFinishLaunching() {
+        registerUserNotificationSettings()
         activateSession()
     }
     
     func applicationDidBecomeActive() {
     }
     
+    func scheduleApplicationRefresh() {
+        //        print(sharedObjects.simpleDebug())
+        let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 360)
+        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
+        print("\n\(sharedObjects.simpleDebug()) for \(sharedObjects.localTime(date: nextFire))\n")
+    }
+    
     func applicationWillResignActive() {
+//        reloadComplicationData8(backgroundTask: backgroundTask)
+        scheduleApplicationRefresh()
     }
     
     func updateComplicationDisplay() {
+        print(sharedObjects.simpleDebug())
         let complicationsController = ComplicationController()
         complicationsController.reloadOrExtendData()
     }
     
+    //pasted BG task from DEW 8
+    
+    func scheduleSnapshotRefresh() {
+        let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 61)
+        WKExtension.shared().scheduleSnapshotRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
+        print("\n\(sharedObjects.simpleDebug()) for \(sharedObjects.localTime(date: nextFire))\n")
+    }
+    
+    func reloadComplicationData8(backgroundTask: WKApplicationRefreshBackgroundTask) {
+        print(sharedObjects.simpleDebug())
+        //calls as aR task (application refresh)
+        checkSessionStatus()
+        let nextFire = Date(timeIntervalSinceNow: 360)
+        WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
+        checkSessionStatus()
+        self.updateComplicationDisplay()
+    }
+    
     //this function for BG tasks only
     func reloadComplicationData(backgroundTask: WKApplicationRefreshBackgroundTask) {
-        self.updateComplicationDisplay()
+//        self.updateComplicationDisplay()
         updateComplicationDisplay()
     }
     
@@ -46,6 +75,74 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         _ userInfo: [AnyHashable : Any]?) {
         //this gets called when clicking on a complication
         updateComplicationDisplay()
+    }
+    
+    func stringWithUUID() -> String {
+        let uuidObj = CFUUIDCreate(nil)
+        let uuidString = CFUUIDCreateString(nil, uuidObj)!
+        return uuidString as String
+    }
+    
+    
+    func throwNotification() {
+        //        print(sharedObjects.fullDebug())
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.alertSetting == .enabled {
+                let notificationContent = UNMutableNotificationContent()
+                
+                notificationContent.title = "DEW Notification!"
+                
+//                notificationContent.body = "session changes: " + String(self.reachabilityChangeCount) + ", sessions checked: " + String(self.amountChecked)
+                notificationContent.body = globalVars.labelString
+                notificationContent.sound = UNNotificationSound.default();
+                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
+                let identifier = self.stringWithUUID()
+                let notificationRequest = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: notificationTrigger)
+                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+                }
+            }
+        }
+    }
+
+    
+    func checkSessionStatus() {
+        print(sharedObjects.simpleDebug())
+        //        amountChecked = amountChecked + 1
+        if WCSession.isSupported() {
+            StatusReporter.updateStatus()
+            let session = WCSession.default
+            if (session.activationState.rawValue != 0) { //if you don't have this, sometimes it;ll try and check status before the ssession is active. Not sure if that's an expensive fail or a cheap fail, better to code around it rather than let it fail
+                
+                globalVars.newConnectionStatus = session.isReachable
+                
+                if (globalVars.newConnectionStatus == true) {
+                    globalVars.newStatusString = "nT"
+                } else {
+                    globalVars.newStatusString = "nF"
+                }
+                
+                if (globalVars.oldConnectionStatus == true) {
+                    globalVars.oldStatusString = "oT"
+                } else {
+                    globalVars.oldStatusString = "oF"
+                }
+                
+//                sessionComparison = "o:\(oldStatus) n:\(newStatus)"
+//                sessionStatus = String(newStatus)
+                if (globalVars.oldConnectionStatus != globalVars.newConnectionStatus || globalVars.newConnectionStatus == false) {
+                    print("oldConnectionStatus=\(globalVars.oldConnectionStatus), newConnectionStatus=\(globalVars.newConnectionStatus)")
+                    updateComplicationDisplay()
+                    throwNotification()
+                } else {
+//                    throwNotification()
+                }
+                globalVars.oldConnectionStatus = session.isReachable
+            } //end of if session not active
+            else {
+                print("session not active, try next time")
+            }
+        } //WCSession not supported
+                updateComplicationDisplay()
     }
     
     func session(_ session: WCSession, activationDidCompleteWith
@@ -77,43 +174,28 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func sessionReachabilityDidChange(_ wSession: WCSession) {
         StatusReporter.updateStatus()
-        updateComplicationDisplay()
+//        updateComplicationDisplay()
         let backgroundTask = WKApplicationRefreshBackgroundTask()
         reloadComplicationData(backgroundTask: backgroundTask)
     }
 
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
         for task in backgroundTasks {
-            print("\(sharedObjects.fullDebug()), \(task)")
+            print("\(sharedObjects.simpleDebug()) \(task)")
             switch task {
             
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
-                StatusReporter.updateStatus()
-                updateComplicationDisplay()
+//                StatusReporter.updateStatus()
+                checkSessionStatus()
+                reloadComplicationData8(backgroundTask: backgroundTask)
                 backgroundTask.setTaskCompletedWithSnapshot(false)
             
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
-                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil)
-                
-                
-                // Always reset back to the root controller
-                // taken from some other app that sort of worked: UHL from book
-                //                let wkExtension = WKExtension.shared()
-                //                wkExtension.rootInterfaceController?.popToRootController()
-                //                wkExtension.rootInterfaceController?.pushController(
-                //                    withName: "InterfaceController", context: nil)
-                //
-//                updateComplicationDisplay()
-                
-                //                print(Date())
-                //                print(Date() + 90)
-//                                StatusReporter.updateStatus()
-                // Snapshot tasks have a unique completion call, make sure to set your expiration date
-//                                StatusReporter.updateStatus()
-                
-                //                print(globalVars.counter)
- 
-            
+//                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil)
+                scheduleSnapshotRefresh()
+                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
+                checkSessionStatus()
+
             case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
                 print("WKWatchConnectivityRefreshBackgroundTask invoked")
                 // Be sure to complete the connectivity task once you’re done.
@@ -151,5 +233,44 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     } //end of func session
     
 }
+
+extension ExtensionDelegate: UNUserNotificationCenterDelegate {
+    
+    func registerUserNotificationSettings() {
+        print(sharedObjects.simpleDebug())
+        UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { (granted, error) in
+            if granted {
+                print("granted")
+                UNUserNotificationCenter.current().delegate = self
+            } else {//not granted
+                print("not granted")
+            }
+        } //request closed
+    }
+    
+}
+
+
+
+//                updateComplicationDisplay()
+
+// Always reset back to the root controller
+// taken from some other app that sort of worked: UHL from book
+//                let wkExtension = WKExtension.shared()
+//                wkExtension.rootInterfaceController?.popToRootController()
+//                wkExtension.rootInterfaceController?.pushController(
+//                    withName: "InterfaceController", context: nil)
+//
+//                updateComplicationDisplay()
+
+//                print(Date())
+//                print(Date() + 90)
+//                                StatusReporter.updateStatus()
+// Snapshot tasks have a unique completion call, make sure to set your expiration date
+//                                StatusReporter.updateStatus()
+
+//                print(globalVars.counter)
+
+
 
 
