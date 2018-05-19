@@ -21,9 +21,15 @@ extension Int {
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
-//    func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
-//        return "\(file):\(line) : \(function)"
-//    }
+    func applicationDidFinishLaunching() {
+        activateSession()
+    }
+    
+    func applicationDidBecomeActive() {
+    }
+    
+    func applicationWillResignActive() {
+    }
     
     func updateComplicationDisplay() {
         let complicationsController = ComplicationController()
@@ -33,106 +39,61 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     //this function for BG tasks only
     func reloadComplicationData(backgroundTask: WKApplicationRefreshBackgroundTask) {
         self.updateComplicationDisplay()
-//        WKExtension.shared().scheduleBackgroundRefresh(
-//        withPreferredDate: Date(), userInfo: nil) { _ in }
-        updateComplicationDisplay()
-        }
-    
-    func refreshComplicationData() {
         updateComplicationDisplay()
     }
     
     func handleUserActivity(
         _ userInfo: [AnyHashable : Any]?) {
+        //this gets called when clicking on a complication
         updateComplicationDisplay()
     }
     
     func session(_ session: WCSession, activationDidCompleteWith
         activationState: WCSessionActivationState, error: Error?) {
-        
-        if let error = error {
-            print("WC Session activation failed with error: " + "\(error.localizedDescription)")
-            return
-        }
-        print("WC Session activated with state: " + "\(activationState.rawValue)")
     }
     
-    func setupWatchConnectivity() {
-        print(StatusReporter.debug())
+    func activateSession() {
         if WCSession.isSupported() {
             let session  = WCSession.default
             session.delegate = self
             session.activate()
-            print("phoneSession.activationState = ", terminator: "")
-            print(session.activationState.rawValue)
         }
     }
     
-    static var oldStatus = Bool(false)
+//    static var oldStatus = Bool(false)
     
-    func printGlobalVars() {
-        //        for each in globalVars
-        print("\(globalVars.textString)")
-        print("\(globalVars.shortString)")
-        print("\(globalVars.connectionStatus)")
-//        print("\(globalVars.stringColor)")
-    }
+//    func printGlobalVars() {
+//        //        for each in globalVars
+//        print("\(globalVars.textString)")
+//        print("\(globalVars.shortString)")
+//        print("\(globalVars.connectionStatus)")
+////        print("\(globalVars.stringColor)")
+//    }
 
     func sessionWatchStateDidChange() { //this is designed to run on the phone and alert when the WATCH is gone. Good future feature, but doens't help us detect the phone that's left behind. 
         globalVars.debugString = "watchChange"
-        InterfaceController.scheduleLocalNotification()
+//        InterfaceController.scheduleLocalNotification()
     }
     
     func sessionReachabilityDidChange(_ wSession: WCSession) {
-        
-//        globalVars.debugString = "sessionChange"
-        print(StatusReporter.debug())
-        StatusReporter.isReachableNoReturn()
+        StatusReporter.updateStatus()
         updateComplicationDisplay()
         let backgroundTask = WKApplicationRefreshBackgroundTask()
         reloadComplicationData(backgroundTask: backgroundTask)
-//        scheduleLocalNotification()
-        InterfaceController.scheduleLocalNotification()
-    }
-
-    func applicationDidFinishLaunching() {
-        setupWatchConnectivity()
-//        printGlobalVars()
-    }
-    
-    func applicationDidBecomeActive() {
-//        print(StatusReporter.debug())
-        
-
-    }
-
-    func applicationWillResignActive() {        
-        print(StatusReporter.debug())
-//        updateComplicationDisplay()
     }
 
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
-        // Sent when the system needs to launch the application in the background to process tasks. Tasks arrive in a set, so loop through and process each one.
-//        print(debug())
         for task in backgroundTasks {
-            
+            print("\(sharedObjects.fullDebug()), \(task)")
             switch task {
             
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
-//                print("print WKApplicationRefreshBackgroundTask")
-                StatusReporter.isReachableNoReturn()
+                StatusReporter.updateStatus()
                 updateComplicationDisplay()
-                // Be sure to complete the background task once you’re done.
-                //let backgroundTask = WKApplicationRefreshBackgroundTask()
-//                reloadComplicationData(backgroundTask: backgroundTask)
-//                refreshComplicationData()
                 backgroundTask.setTaskCompletedWithSnapshot(false)
             
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
-//                print("print WKSnapshotRefreshBackgroundTask")
                 snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil)
-                
-                //                refreshComplicationData()
                 
                 
                 // Always reset back to the root controller
@@ -146,9 +107,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                 
                 //                print(Date())
                 //                print(Date() + 90)
-                //                StatusReporter.isReachableNoReturn()
+//                                StatusReporter.updateStatus()
                 // Snapshot tasks have a unique completion call, make sure to set your expiration date
-                //                StatusReporter.isReachableNoReturn()
+//                                StatusReporter.updateStatus()
                 
                 //                print(globalVars.counter)
  

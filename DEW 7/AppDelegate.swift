@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
         //in a timely manner, and if not, conclude it's disconnected
         //this broken approach is necessary becuase the watch keeps updating its status
         //when the app closes (as a change state event) it caoncludes it's not connected, when it is
-        print(StatusReporter.debug())
+
         if WCSession.isSupported() {
             let status = "connected"
             let session = WCSession.default
@@ -93,12 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
     // 3
     func session(_ session: WCSession, activationDidCompleteWith
         activationState: WCSessionActivationState, error: Error?) {
-        if let error = error {
-            print("AP Session activation failed with error: " + "\(error.localizedDescription)")
-            return
-        }
-        print("AP Session activated with state: " + "\(activationState.rawValue)")
-    }
+   }
 
     var window: UIWindow?
 

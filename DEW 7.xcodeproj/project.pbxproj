@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D40DAF8420AFA68300BBA8CA /* StatusReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C744941FB5570000E82EB6 /* StatusReporter.swift */; };
 		D4C744921FB5468F00E82EB6 /* DEW7.ckcomplication in Resources */ = {isa = PBXBuildFile; fileRef = D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */; };
-		D4C744951FB5570000E82EB6 /* StatusReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C744941FB5570000E82EB6 /* StatusReporter.swift */; };
-		D4C744961FB5570000E82EB6 /* StatusReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C744941FB5570000E82EB6 /* StatusReporter.swift */; };
 		D4D7063E1FB3E77400523A1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7063D1FB3E77400523A1E /* AppDelegate.swift */; };
 		D4D706401FB3E77400523A1E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7063F1FB3E77400523A1E /* ViewController.swift */; };
 		D4D706431FB3E77400523A1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4D706411FB3E77400523A1E /* Main.storyboard */; };
@@ -23,9 +22,6 @@
 		D4D706631FB3E77400523A1E /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */; };
 		D4D706651FB3E77400523A1E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706641FB3E77400523A1E /* NotificationController.swift */; };
 		D4D706671FB3E77400523A1E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706661FB3E77400523A1E /* ComplicationController.swift */; };
-		D4DDD52F20A10E17002CBC64 /* local_cat01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4DDD51B20A10E16002CBC64 /* local_cat01.jpg */; };
-		D4DDD53020A10E17002CBC64 /* local_cat03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4DDD51C20A10E16002CBC64 /* local_cat03.jpg */; };
-		D4DDD53B20A10E17002CBC64 /* local_cat02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4DDD52720A10E17002CBC64 /* local_cat02.jpg */; };
 		D4E68C921FBF7BBB0054274A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E68C911FBF7BBB0054274A /* Assets.xcassets */; };
 		D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E68C911FBF7BBB0054274A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -93,9 +89,6 @@
 		D4D706661FB3E77400523A1E /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		D4D7066A1FB3E77400523A1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4D7066B1FB3E77400523A1E /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		D4DDD51B20A10E16002CBC64 /* local_cat01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = local_cat01.jpg; sourceTree = "<group>"; };
-		D4DDD51C20A10E16002CBC64 /* local_cat03.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = local_cat03.jpg; sourceTree = "<group>"; };
-		D4DDD52720A10E17002CBC64 /* local_cat02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = local_cat02.jpg; sourceTree = "<group>"; };
 		D4E68C911FBF7BBB0054274A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,14 +110,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D4C744931FB5567700E82EB6 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				D4C744941FB5570000E82EB6 /* StatusReporter.swift */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		D4D706311FB3E77400523A1E = {
 			isa = PBXGroup;
 			children = (
@@ -148,7 +133,7 @@
 		D4D7063C1FB3E77400523A1E /* DEW 7 */ = {
 			isa = PBXGroup;
 			children = (
-				D4C744931FB5567700E82EB6 /* Shared */,
+				D4C744941FB5570000E82EB6 /* StatusReporter.swift */,
 				D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */,
 				D4D7063D1FB3E77400523A1E /* AppDelegate.swift */,
 				D4D7063F1FB3E77400523A1E /* ViewController.swift */,
@@ -173,7 +158,6 @@
 		D4D7065F1FB3E77400523A1E /* DEW 7 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				D4E3F7D120A10C33008F7B55 /* cat images */,
 				D4D706601FB3E77400523A1E /* InterfaceController.swift */,
 				D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */,
 				D4D706641FB3E77400523A1E /* NotificationController.swift */,
@@ -183,16 +167,6 @@
 				D4D7066B1FB3E77400523A1E /* PushNotificationPayload.apns */,
 			);
 			path = "DEW 7 WatchKit Extension";
-			sourceTree = "<group>";
-		};
-		D4E3F7D120A10C33008F7B55 /* cat images */ = {
-			isa = PBXGroup;
-			children = (
-				D4DDD51B20A10E16002CBC64 /* local_cat01.jpg */,
-				D4DDD52720A10E17002CBC64 /* local_cat02.jpg */,
-				D4DDD51C20A10E16002CBC64 /* local_cat03.jpg */,
-			);
-			path = "cat images";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,10 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4DDD53020A10E17002CBC64 /* local_cat03.jpg in Resources */,
 				D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */,
-				D4DDD52F20A10E17002CBC64 /* local_cat01.jpg in Resources */,
-				D4DDD53B20A10E17002CBC64 /* local_cat02.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +306,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4C744951FB5570000E82EB6 /* StatusReporter.swift in Sources */,
 				D4D706401FB3E77400523A1E /* ViewController.swift in Sources */,
 				D4D7063E1FB3E77400523A1E /* AppDelegate.swift in Sources */,
 			);
@@ -347,7 +317,7 @@
 			files = (
 				D4D706651FB3E77400523A1E /* NotificationController.swift in Sources */,
 				D4D706671FB3E77400523A1E /* ComplicationController.swift in Sources */,
-				D4C744961FB5570000E82EB6 /* StatusReporter.swift in Sources */,
+				D40DAF8420AFA68300BBA8CA /* StatusReporter.swift in Sources */,
 				D4D706631FB3E77400523A1E /* ExtensionDelegate.swift in Sources */,
 				D4D706611FB3E77400523A1E /* InterfaceController.swift in Sources */,
 			);

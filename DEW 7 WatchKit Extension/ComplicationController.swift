@@ -15,9 +15,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 //    }
     
     func reloadOrExtendData() {
-        print(StatusReporter.debug())
-        
-        print(Date().description(with: Locale.current))
         // 1
         let server = CLKComplicationServer.sharedInstance()
         guard let complications = server.activeComplications,
@@ -30,23 +27,24 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Configuration
     func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
         handler([.forward, .backward])
-        print(StatusReporter.debug())
     }
     
 
     // MARK: - Timeline Population
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        print(StatusReporter.debug())
+//        print("complication type = \(complication.family)")
+        
+        
         if complication.family == .utilitarianSmall {
-//            print("utilSmall")
+            print("utilitarianSmall")
             let smallFlat = CLKComplicationTemplateUtilitarianSmallFlat()
             smallFlat.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
             smallFlat.textProvider = CLKSimpleTextProvider(text:   globalVars.shortString)
-//            smallFlat.textProvider = CLKSimpleTextProvider(text:   "")
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: smallFlat))
         }
             
         else  if complication.family == .utilitarianLarge {
+            print("utilitarianLarge")
             let largeFlat = CLKComplicationTemplateUtilitarianLargeFlat()
             largeFlat.textProvider = CLKSimpleTextProvider(
 //                text: globalVars.textString + " " + String(globalVars.counter), shortText: globalVars.shortString)
@@ -55,12 +53,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
             
         else if complication.family == .circularSmall {
+            print("circularSmall")
             let circSmall = CLKComplicationTemplateCircularSmallSimpleImage()
             circSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: circSmall))
         }
             
         else if complication.family == .modularSmall {
+            print("modularSmall")
             let modSmall = CLKComplicationTemplateModularSmallSimpleImage()
             modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
             modSmall.imageProvider.tintColor = globalVars.stringColor
@@ -68,6 +68,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
             
         else if complication.family == .modularLarge {
+            print("modularLarge")
             let modLarge = CLKComplicationTemplateModularLargeStandardBody()
             modLarge.headerTextProvider = CLKSimpleTextProvider(text: globalVars.textString)
             modLarge.headerTextProvider.tintColor = globalVars.stringColor
@@ -77,10 +78,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
         
         else if complication.family == .extraLarge {
+            print("extraLarge")
             let exLarge = CLKComplicationTemplateExtraLargeSimpleImage()
             exLarge.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
             exLarge.imageProvider.tintColor = globalVars.stringColor
-//            modLarge.headerTextProvider.tintColor = globalVars.stringColor
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: exLarge))
         }
     }
@@ -88,7 +89,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Placeholder Templates
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
         print(StatusReporter.debug())
+        print("complication type = \(complication.family)")
+        
         if complication.family == .utilitarianSmall {
+            print("modularSmall")
             let smallFlat = CLKComplicationTemplateUtilitarianSmallFlat()
             smallFlat.textProvider = CLKSimpleTextProvider(text: "int")
             smallFlat.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
@@ -96,12 +100,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
 
         else if complication.family == .utilitarianLarge {
+            print("modularSmall")
             let largeFlat = CLKComplicationTemplateUtilitarianLargeFlat()
             largeFlat.textProvider = CLKSimpleTextProvider(text: "installed", shortText:globalVars.shortString)
             handler(largeFlat)
         }
             
         else if complication.family == .circularSmall {
+            print("modularSmall")
             let circSmall = CLKComplicationTemplateCircularSmallSimpleImage()
             circSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
 //            let circSmall = CLKComplicationTemplateCircularSmallStackImage()
@@ -111,12 +117,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
             
         else if complication.family == .modularSmall {
+            print("modularSmall")
             let modSmall = CLKComplicationTemplateModularSmallSimpleImage()
             modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
             handler(modSmall)
         }
         
         else if complication.family == .modularLarge {
+            print("modularLarge")
             let modLarge = CLKComplicationTemplateModularLargeStandardBody()
             modLarge.headerTextProvider.tintColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
             modLarge.headerTextProvider = CLKSimpleTextProvider(text: "Distant Early Warning")
@@ -125,6 +133,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
         
         else if complication.family == .extraLarge {
+            print("extraLarge")
             let exLarge = CLKComplicationTemplateExtraLargeSimpleImage()
             exLarge.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
             handler(exLarge)
