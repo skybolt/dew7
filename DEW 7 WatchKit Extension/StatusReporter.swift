@@ -25,6 +25,9 @@ struct globalVars {
     static var newStatusString = "nN"
     static var oldStatusString = "nN"
     static var counter = 0
+    static var notificationAsked = "n/a"
+    static var notificationThrown = "n/a"
+    static var notificationTriggered = "n/a"
 }
 
 final class sharedObjects: NSObject {
@@ -62,6 +65,7 @@ final class StatusReporter: NSObject {
     
 
     static func updateStatus() {
+        print(sharedObjects.fullDebug())
 
         if WCSession.default.isReachable == true {
             globalVars.textString = "connected"
@@ -90,87 +94,3 @@ final class StatusReporter: NSObject {
         globalVars.newConnectionStatus = WCSession.default.isReachable
     }
 }
-
-
-
-
-
-
-
-//    static func queryStatus() -> Bool {
-//        return WCSession.default.isReachable
-//    }
-
-//    var shortText: String {
-//        if isReachable() == true {
-//            globalVars.shortString = "CON"
-//        } else if isReachable() == false {
-//            globalVars.shortString = "DIS"
-//        }
-//        return "string"
-//    }
-//
-//    var longText: String {
-//        if isReachable() == true {
-//            globalVars.textString = "connected"
-//        } else if isReachable() == false {
-//            globalVars.textString = "disconnected"
-//        }
-//        return "string"
-//    }
-
-//    static func labelStatus() -> String {
-//        var sString = "labelStatus"
-//        if WCSession.isSupported() {
-//            let phoneSession = WCSession.default
-//            if phoneSession.isReachable == true {
-//                sString = """
-//                system active
-//                phone connected
-//                """
-//            } else {
-//                sString = """
-//            phone
-//            NOT connected
-//            """
-//            }
-//
-//        } else {
-//            sString = "session not supported"
-//        }
-//        return sString
-//    }
-//
-//
-//    static func longStatus() -> String {
-//        var sString = "init"
-//        if WCSession.isSupported() {
-//            let phoneSession = WCSession.default
-//            if phoneSession.isReachable == true {
-//                sString = "connected"
-//                return sString
-//            } else {
-//                sString = "disconnected"
-//                return sString
-//            }
-//         } else {
-//            sString = "not supported"
-//            return sString
-//        }
-//    }
-
-//    static func shortStatus() -> String {
-//        var sString = "init"
-//        if WCSession.isSupported() {
-//            let phoneSession = WCSession.default
-//            if phoneSession.isReachable == true {
-//                sString = "con"
-//            } else {
-//                sString = "dis"
-//            }
-//        } else {
-//            sString = "not supported"
-//        }
-//        return sString
-//    }
-
