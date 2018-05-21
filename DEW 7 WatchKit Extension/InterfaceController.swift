@@ -58,10 +58,12 @@ class InterfaceController: WKInterfaceController {
     }
     
     override func willActivate() {
+        print(sharedObjects.fullDebug())
         checkStatusAction()
     }
     
     override func didDeactivate() {
+//        print(sharedObjects.fullDebug())
         super.didDeactivate()
     }
     

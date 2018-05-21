@@ -27,7 +27,6 @@ struct globalVars {
     static var counter = 0
     static var notificationAsked = "n/a"
     static var notificationThrown = "n/a"
-    static var notificationTriggered = "n/a"
 }
 
 final class sharedObjects: NSObject {

@@ -27,11 +27,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     func applicationDidBecomeActive() {
+        checkSessionStatus()
+        updateComplicationDisplay()
     }
     
     func scheduleApplicationRefresh() {
         //        print(sharedObjects.simpleDebug())
-        let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 360)
+        let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 61)
         WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
         print("\n\(sharedObjects.simpleDebug()) for \(sharedObjects.localTime(date: nextFire))\n")
     }
@@ -39,7 +41,9 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func applicationWillResignActive() {
 //        reloadComplicationData8(backgroundTask: backgroundTask)
         scheduleApplicationRefresh()
-        throwNotification()
+        scheduleSnapshotRefresh()
+        updateComplicationDisplay()
+//        throwNotification()
     }
     
     func updateComplicationDisplay() {
@@ -59,10 +63,10 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     func reloadComplicationData8(backgroundTask: WKApplicationRefreshBackgroundTask) {
 //        print(sharedObjects.simpleDebug())
         //calls as aR task (application refresh)
-        checkSessionStatus()
+//        checkSessionStatus()
         let nextFire = Date(timeIntervalSinceNow: 360)
         WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
-        checkSessionStatus()
+//        checkSessionStatus()
         self.updateComplicationDisplay()
     }
     
@@ -97,7 +101,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                 notificationContent.body = """
                                             Ask: \(globalVars.notificationAsked)
                                             Thr: \(globalVars.notificationThrown)
-                                            Trg: \(globalVars.notificationTriggered)
                                             """
                 notificationContent.sound = UNNotificationSound.default();
                 let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
@@ -164,6 +167,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     func sessionReachabilityDidChange(_ wSession: WCSession) {
+        print(sharedObjects.simpleDebug())
         StatusReporter.updateStatus()
         let backgroundTask = WKApplicationRefreshBackgroundTask()
         reloadComplicationData(backgroundTask: backgroundTask)
@@ -174,15 +178,16 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             switch task {
             
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
-                checkSessionStatus()
+//                checkSessionStatus()
                 reloadComplicationData8(backgroundTask: backgroundTask)
                 backgroundTask.setTaskCompletedWithSnapshot(false)
             
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
-//                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil)
+//                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil) //my code from 2017
+                print("let's call snapshot from snapshot")
                 scheduleSnapshotRefresh()
-                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
-                checkSessionStatus()
+                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil) //code based on DEW 8, new normal code as insertedf by xCode
+//                checkSessionStatus()
 
             case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
                 connectivityTask.setTaskCompletedWithSnapshot(false)
