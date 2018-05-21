@@ -12,6 +12,9 @@ import WatchConnectivity
 
 struct globalVars {
     //set up global variables and set initial values
+    static var bgAppCounter = 0
+    static var bgSnapshotCounter = 0
+    static var sessionChangeCounter = 0
     static var textString = "connecting"
     static var shortString = "..."
     static var labelString = "D.E.W. initializing"

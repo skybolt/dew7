@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D40DAF8420AFA68300BBA8CA /* StatusReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C744941FB5570000E82EB6 /* StatusReporter.swift */; };
 		D4C744921FB5468F00E82EB6 /* DEW7.ckcomplication in Resources */ = {isa = PBXBuildFile; fileRef = D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */; };
+		D4D0C89220B258A900C08DDD /* DebugInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0C89120B258A900C08DDD /* DebugInfoController.swift */; };
+		D4D0C89320B2634700C08DDD /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4D706511FB3E77400523A1E /* Interface.storyboard */; };
 		D4D7063E1FB3E77400523A1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7063D1FB3E77400523A1E /* AppDelegate.swift */; };
 		D4D706401FB3E77400523A1E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7063F1FB3E77400523A1E /* ViewController.swift */; };
 		D4D706431FB3E77400523A1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4D706411FB3E77400523A1E /* Main.storyboard */; };
@@ -71,6 +73,7 @@
 /* Begin PBXFileReference section */
 		D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DEW7.ckcomplication; sourceTree = "<group>"; };
 		D4C744941FB5570000E82EB6 /* StatusReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusReporter.swift; sourceTree = "<group>"; };
+		D4D0C89120B258A900C08DDD /* DebugInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfoController.swift; sourceTree = "<group>"; };
 		D4D7063A1FB3E77400523A1E /* DEW 7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DEW 7.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4D7063D1FB3E77400523A1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4D7063F1FB3E77400523A1E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 			children = (
 				D4C744941FB5570000E82EB6 /* StatusReporter.swift */,
 				D4D706601FB3E77400523A1E /* InterfaceController.swift */,
+				D4D0C89120B258A900C08DDD /* DebugInfoController.swift */,
 				D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */,
 				D4D706641FB3E77400523A1E /* NotificationController.swift */,
 				D4D706661FB3E77400523A1E /* ComplicationController.swift */,
@@ -295,6 +299,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4D0C89320B2634700C08DDD /* Interface.storyboard in Resources */,
 				D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4D706651FB3E77400523A1E /* NotificationController.swift in Sources */,
+				D4D0C89220B258A900C08DDD /* DebugInfoController.swift in Sources */,
 				D4D706671FB3E77400523A1E /* ComplicationController.swift in Sources */,
 				D40DAF8420AFA68300BBA8CA /* StatusReporter.swift in Sources */,
 				D4D706631FB3E77400523A1E /* ExtensionDelegate.swift in Sources */,

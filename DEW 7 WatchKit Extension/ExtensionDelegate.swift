@@ -162,7 +162,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         }
     }
 
-    func sessionWatchStateDidChange() { //this is designed to run on the phone and alert when the WATCH is gone. Good future feature, but doens't help us detect the phone that's left behind. 
+    func sessionWatchStateDidChange() { //this is designed to run on the phone and alert when the WATCH is gone. Good future feature, but doens't help us detect the phone that's left behind.
+        globalVars.sessionChangeCounter = globalVars.sessionChangeCounter + 1
         globalVars.debugString = "watchChange"
     }
     
@@ -179,10 +180,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
 //                checkSessionStatus()
+                globalVars.bgAppCounter = globalVars.bgAppCounter + 1
                 reloadComplicationData8(backgroundTask: backgroundTask)
                 backgroundTask.setTaskCompletedWithSnapshot(false)
             
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
+                globalVars.bgSnapshotCounter = globalVars.bgSnapshotCounter + 1
 //                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil) //my code from 2017
                 print("let's call snapshot from snapshot")
                 scheduleSnapshotRefresh()

@@ -26,8 +26,11 @@ class InterfaceController: WKInterfaceController {
     
     static var buttonImageHolder = UIImage(named: "blackDEW") //"UIImage here. Not know how to call."
     //update May 18 2018 this is probably handled under globalVars.statusBitmap
-
-
+    
+    @IBAction func gotoDebugInfo() {
+        print(sharedObjects.fullDebug())
+        presentController(withName: "debugInfo", context: self)
+    }
     
     @IBAction func checkStatusAction() {
         //pulled when round refresh icon on Force Touch screen pressed

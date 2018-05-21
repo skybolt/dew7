@@ -39,7 +39,11 @@ connection status</string>
                                     <action selector="checkStatusAction" destination="AgC-eL-Hgc" id="hZi-9U-s1t"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Debug Info" icon="more" id="a4b-mE-IU2" userLabel="debug"/>
+                            <menuItem title="Debug Info" icon="more" id="a4b-mE-IU2" userLabel="debug">
+                                <connections>
+                                    <action selector="gotoDebugInfo" destination="AgC-eL-Hgc" id="wm6-bi-F9t"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                     <connections>
@@ -48,6 +52,7 @@ connection status</string>
                         <outlet property="initialDEWImage" destination="iOp-8h-8cG" id="tGM-i2-KkG"/>
                         <outlet property="refreshButtonImage" destination="zKd-9N-eak" id="Ocf-P9-YhF"/>
                         <outlet property="statusLabel" destination="WT5-rn-Ftd" id="dwA-Zv-wgM"/>
+                        <segue destination="Yg1-nO-qeU" kind="relationship" relationship="nextPage" id="tj5-1X-IL6"/>
                     </connections>
                 </controller>
             </objects>
@@ -86,6 +91,20 @@ connection status</string>
                 </controller>
             </objects>
             <point key="canvasLocation" x="520" y="643"/>
+        </scene>
+        <!--Debug-->
+        <scene sceneID="KJq-Xv-h5F">
+            <objects>
+                <controller identifier="debugInfo" title="Close" id="Yg1-nO-qeU" userLabel="Debug" customClass="DebugInfoController" customModule="DEW_7_WatchKit_Extension">
+                    <items>
+                        <label alignment="left" text="Label" numberOfLines="0" id="ZIA-zf-LLG" userLabel="DebugInfoLabel"/>
+                    </items>
+                    <connections>
+                        <outlet property="debugLabel" destination="ZIA-zf-LLG" id="YP7-EQ-f7S"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="520" y="344"/>
         </scene>
     </scenes>
 </document>
