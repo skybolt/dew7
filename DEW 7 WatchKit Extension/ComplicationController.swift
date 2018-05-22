@@ -20,20 +20,21 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             }
         }
  
-    // MARK: - Timeline Configuration
     func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
         handler([.forward, .backward])
     }
 
     // MARK: - Timeline Population
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-
         
         if complication.family == .utilitarianSmall {
 //            print("utilitarianSmall")
-            let smallFlat = CLKComplicationTemplateUtilitarianSmallFlat()
+//            let smallFlat = CLKComplicationTemplateUtilitarianSmallFlat()
+//            let smallFlat = CLKComplicationTemplateUtilitarianSmallRingImage()
+//            let smallFlat = CLKComplicationTemplateUtilitarianSmallRingText()
+            let smallFlat = CLKComplicationTemplateUtilitarianSmallSquare()
             smallFlat.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
-            smallFlat.textProvider = CLKSimpleTextProvider(text:   globalVars.shortString)
+//            smallFlat.textProvider = CLKSimpleTextProvider(text:   globalVars.shortString)
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: smallFlat))
         }
             
@@ -45,7 +46,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 text: globalVars.textString, shortText: globalVars.shortString)
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: largeFlat))
         }
-            
+
         else if complication.family == .circularSmall {
 //            print("circularSmall")
             let circSmall = CLKComplicationTemplateCircularSmallSimpleImage()
@@ -56,6 +57,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         else if complication.family == .modularSmall {
 //            print("modularSmall")
             let modSmall = CLKComplicationTemplateModularSmallSimpleImage()
+//            let modSmall = CLKComplicationTemplateModularSmallRingImage()
             modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
             modSmall.imageProvider.tintColor = globalVars.stringColor
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: modSmall))

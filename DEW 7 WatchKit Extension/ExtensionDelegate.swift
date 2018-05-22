@@ -26,6 +26,18 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         activateSession()
     }
     
+    func compareDates(id: String, date: Date) {
+        
+        let lastInterval = Int(CFDateGetTimeIntervalSinceDate(Date() as CFDate, date as CFDate)/60)
+        
+        let someString = "\(id)\(String(lastInterval))"
+        globalVars.debugString = someString + globalVars.debugString
+        let subString = globalVars.debugString.prefix(45)
+        globalVars.debugString = String(subString)
+        print(globalVars.debugString)
+        
+    }
+    
     func applicationDidBecomeActive() {
         checkSessionStatus()
         updateComplicationDisplay()
@@ -43,7 +55,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         scheduleApplicationRefresh()
         scheduleSnapshotRefresh()
         updateComplicationDisplay()
-//        throwNotification()
     }
     
     func updateComplicationDisplay() {
@@ -53,7 +64,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     //pasted BG task from DEW 8
-    
     func scheduleSnapshotRefresh() {
         let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 61)
         WKExtension.shared().scheduleSnapshotRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
@@ -61,18 +71,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     func reloadComplicationData8(backgroundTask: WKApplicationRefreshBackgroundTask) {
-//        print(sharedObjects.simpleDebug())
-        //calls as aR task (application refresh)
-//        checkSessionStatus()
         let nextFire = Date(timeIntervalSinceNow: 360)
         WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
-//        checkSessionStatus()
         self.updateComplicationDisplay()
     }
     
     //this function for BG tasks only
     func reloadComplicationData(backgroundTask: WKApplicationRefreshBackgroundTask) {
-//        self.updateComplicationDisplay()
         updateComplicationDisplay()
     }
     
@@ -113,7 +118,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
 
     func checkSessionStatus() {
-        print(sharedObjects.fullDebug())
+//        print(sharedObjects.fullDebug())
         if WCSession.isSupported() {
             StatusReporter.updateStatus()
             let session = WCSession.default
@@ -134,12 +139,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                 }
 
                 if (globalVars.oldConnectionStatus != globalVars.newConnectionStatus || globalVars.newConnectionStatus == false) {
+                    globalVars.debugString = "!" + globalVars.debugString
                     updateComplicationDisplay()
                     globalVars.notificationAsked = sharedObjects.localTime(date: Date())
-                    throwNotification()
-                } else {
-                    //no change in status, so don't do anything?
 //                    throwNotification()
+                } else {
+                    globalVars.debugString = "." + globalVars.debugString
+                    //no change in status, so don't do anything?
                 }
                 globalVars.oldConnectionStatus = session.isReachable
             } //end of if session not active
@@ -163,13 +169,13 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
 
     func sessionWatchStateDidChange() { //this is designed to run on the phone and alert when the WATCH is gone. Good future feature, but doens't help us detect the phone that's left behind.
-        globalVars.sessionChangeCounter = globalVars.sessionChangeCounter + 1
         globalVars.debugString = "watchChange"
     }
     
     func sessionReachabilityDidChange(_ wSession: WCSession) {
         print(sharedObjects.simpleDebug())
         StatusReporter.updateStatus()
+        globalVars.sessionChangeCounter = globalVars.sessionChangeCounter + 1
         let backgroundTask = WKApplicationRefreshBackgroundTask()
         reloadComplicationData(backgroundTask: backgroundTask)
     }
@@ -179,18 +185,20 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             switch task {
             
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
-//                checkSessionStatus()
+                compareDates(id: "a", date: globalVars.dateLastAppRefreshed)
                 globalVars.bgAppCounter = globalVars.bgAppCounter + 1
                 reloadComplicationData8(backgroundTask: backgroundTask)
+                checkSessionStatus()
+                globalVars.dateLastAppRefreshed = Date()
                 backgroundTask.setTaskCompletedWithSnapshot(false)
-            
+
+                
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
+                compareDates(id: "s", date: globalVars.dateLastSnapped)
                 globalVars.bgSnapshotCounter = globalVars.bgSnapshotCounter + 1
-//                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil) //my code from 2017
-                print("let's call snapshot from snapshot")
-                scheduleSnapshotRefresh()
+                globalVars.dateLastSnapped = Date()
+                checkSessionStatus()
                 snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil) //code based on DEW 8, new normal code as insertedf by xCode
-//                checkSessionStatus()
 
             case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
                 connectivityTask.setTaskCompletedWithSnapshot(false)
@@ -206,8 +214,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveApplicationContext
         applicationContext:[String:Any]) {
-//        print(StatusReporter.debug())
-        // 2
         if let status = applicationContext["status"] as? [String] {
             print("applicationContext[\"status\"] is \(status)")
         }
@@ -226,3 +232,8 @@ extension ExtensionDelegate: UNUserNotificationCenterDelegate {
         } //request closed
     }
 }
+
+
+//                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil) //my code from 2017
+//                print("let's call snapshot from snapshot")
+//                scheduleSnapshotRefresh()

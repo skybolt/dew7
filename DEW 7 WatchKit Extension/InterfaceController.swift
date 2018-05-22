@@ -28,13 +28,10 @@ class InterfaceController: WKInterfaceController {
     //update May 18 2018 this is probably handled under globalVars.statusBitmap
     
     @IBAction func gotoDebugInfo() {
-        print(sharedObjects.fullDebug())
         presentController(withName: "debugInfo", context: self)
     }
     
-    @IBAction func checkStatusAction() {
-        //pulled when round refresh icon on Force Touch screen pressed
-
+    func checkStatusAction() {
         print(sharedObjects.simpleDebug())
         StatusReporter.updateStatus()
         statusLabel.setText(globalVars.labelString)
@@ -42,32 +39,30 @@ class InterfaceController: WKInterfaceController {
     }
 
     @IBAction func refreshButton() {
-       //never pulled
-        print(sharedObjects.simpleDebug())
         statusLabel.setText("checking . . .")
         checkStatusAction()
     }
     
     
     @IBAction func graphicRefreshButton() {
-        print(sharedObjects.simpleDebug())
-        //pulled when icon clicked in Interface Controller
         checkStatusAction()
-        
     }
     
     override func awake(withContext context: Any?) {
+        print(sharedObjects.simpleDebug())
+        checkStatusAction()
         super.awake(withContext: context)
     }
     
     override func willActivate() {
-        print(sharedObjects.fullDebug())
-        checkStatusAction()
     }
     
     override func didDeactivate() {
-//        print(sharedObjects.fullDebug())
         super.didDeactivate()
     }
     
 }
+
+//extension WKInterfaceController: UNUserNotificationCenterDelegate {
+//    
+//}

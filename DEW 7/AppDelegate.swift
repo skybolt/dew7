@@ -53,7 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
             if session.isWatchAppInstalled {
                 do {
                     let dictionary = ["status": status]
-                    try session.updateApplicationContext(dictionary); print("try yes")
+                    try session.updateApplicationContext(dictionary); print("try session.updateApplicationContext(dictionary) yes")
+                    print(dictionary)
                 } catch {
                     print("ERROR: \(error)")
                 }

@@ -36,7 +36,7 @@ connection status</string>
                         <items>
                             <menuItem title="Check Status" icon="resume" id="DeJ-2v-R6a" userLabel="checkStatus">
                                 <connections>
-                                    <action selector="checkStatusAction" destination="AgC-eL-Hgc" id="hZi-9U-s1t"/>
+                                    <action selector="refreshButton" destination="AgC-eL-Hgc" id="mYy-d4-zcM"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Debug Info" icon="more" id="a4b-mE-IU2" userLabel="debug">
@@ -52,7 +52,6 @@ connection status</string>
                         <outlet property="initialDEWImage" destination="iOp-8h-8cG" id="tGM-i2-KkG"/>
                         <outlet property="refreshButtonImage" destination="zKd-9N-eak" id="Ocf-P9-YhF"/>
                         <outlet property="statusLabel" destination="WT5-rn-Ftd" id="dwA-Zv-wgM"/>
-                        <segue destination="Yg1-nO-qeU" kind="relationship" relationship="nextPage" id="tj5-1X-IL6"/>
                     </connections>
                 </controller>
             </objects>
@@ -64,6 +63,7 @@ connection status</string>
                 <notificationController id="YCC-NB-fut">
                     <items>
                         <label alignment="center" text="Alert Label" textAlignment="center" numberOfLines="0" id="IdU-wH-bcW"/>
+                        <imageView alignment="left" image="DEW Dark" id="IFn-6S-5PO"/>
                     </items>
                     <notificationCategory key="notificationCategory" identifier="dewNotifications" id="JfB-70-Muf"/>
                     <connections>
@@ -95,11 +95,17 @@ connection status</string>
         <!--Debug-->
         <scene sceneID="KJq-Xv-h5F">
             <objects>
-                <controller identifier="debugInfo" title="Close" id="Yg1-nO-qeU" userLabel="Debug" customClass="DebugInfoController" customModule="DEW_7_WatchKit_Extension">
+                <controller identifier="debugInfo" fullScreen="YES" id="Yg1-nO-qeU" userLabel="Debug" customClass="DebugInfoController" customModule="DEW_7_WatchKit_Extension">
                     <items>
                         <label alignment="left" text="Label" numberOfLines="0" id="ZIA-zf-LLG" userLabel="DebugInfoLabel"/>
+                        <button width="1" alignment="left" title="Close" id="twB-4Y-qgO">
+                            <connections>
+                                <action selector="Close" destination="Yg1-nO-qeU" id="cdG-mn-8TY"/>
+                            </connections>
+                        </button>
                     </items>
                     <connections>
+                        <outlet property="Close" destination="twB-4Y-qgO" id="yhy-mE-Hxr"/>
                         <outlet property="debugLabel" destination="ZIA-zf-LLG" id="YP7-EQ-f7S"/>
                     </connections>
                 </controller>

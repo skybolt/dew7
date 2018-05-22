@@ -18,6 +18,7 @@ class NotificationController: WKUserNotificationInterfaceController {
     
     override func didReceive(_ notification: UNNotification, withCompletion completionHandler:
         @escaping (WKUserNotificationInterfaceType) -> Void) {
+        globalVars.notificationThrown = sharedObjects.localTime(date: Date())
         let notificationBody = notification.request.content.body
         label.setText(notificationBody)
         if let imageAttachment = notification.request.content.attachments.first {

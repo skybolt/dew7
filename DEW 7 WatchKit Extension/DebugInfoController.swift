@@ -14,18 +14,25 @@ class DebugInfoController: WKInterfaceController {
     
     @IBOutlet var debugLabel: WKInterfaceLabel!
     
+    
+    @IBAction func Close() {
+//        presentController(withName: "debugInfo", context: self)
+        dismiss()
+    }
+    
     override func awake(withContext context: Any?) {
         
         super.awake(withContext: context)
         
         // Configure interface objects here.
         
-        print(sharedObjects.fullDebug())
+//        print(sharedObjects.fullDebug())
         debugLabel.setText(
             """
             session changes: \(globalVars.sessionChangeCounter)
             bgApp Refreshes: \(globalVars.bgAppCounter)
             bgSnp Refreshes: \(globalVars.bgSnapshotCounter)
+            ref intervals: \(globalVars.debugString)
             oldStatus: \(globalVars.oldConnectionStatus)
             newStatus: \(globalVars.newConnectionStatus)
             notificationAsked: \(globalVars.notificationAsked)
@@ -43,7 +50,7 @@ class DebugInfoController: WKInterfaceController {
 
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
-        print(sharedObjects.fullDebug())
+//        print(sharedObjects.fullDebug())
         super.didDeactivate()
     }
 
