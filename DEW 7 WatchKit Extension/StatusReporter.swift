@@ -112,7 +112,7 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
                 Ask: \(globalVars.notificationAsked)
                 Thr: \(globalVars.notificationThrown)
                 """
-                notificationContent.sound = UNNotificationSound.default();
+                notificationContent.sound = UNNotificationSound.default;
                 let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
                 
                 let uuidObj = CFUUIDCreate(nil)
@@ -173,7 +173,7 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
                     Ask: \(globalVars.notificationAsked)
                     Thr: \(globalVars.notificationThrown)
                     """
-                    notificationContent.sound = UNNotificationSound.default();
+                    notificationContent.sound = UNNotificationSound.default;
                     let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
                     
                     let uuidObj = CFUUIDCreate(nil)

@@ -107,7 +107,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                                             Ask: \(globalVars.notificationAsked)
                                             Thr: \(globalVars.notificationThrown)
                                             """
-                notificationContent.sound = UNNotificationSound.default();
+                notificationContent.sound = UNNotificationSound.default;
                 let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
                 let identifier = self.stringWithUUID()
                 let notificationRequest = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: notificationTrigger)
