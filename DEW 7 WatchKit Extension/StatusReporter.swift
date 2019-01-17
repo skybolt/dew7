@@ -19,6 +19,7 @@ struct globalVars {
     static var notificationString = "notification string"
     static var statusImage = "connected"
     static var statusBitmap = "blackDew"
+    static var statusGraphCir = "black-94"
     static var debugString = " "
     static var bgAppCounter = 0
     static var bgSnapshotCounter = 0
@@ -138,24 +139,26 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
             globalVars.textString = "connected"
             globalVars.shortString = "OK"
             globalVars.labelString = """
-                                    D.E.W. active
-                                    phone connected
+                                    phone signal
+                                    active
                                     """
             globalVars.notificationString = "iPhone connected"
             globalVars.stringColor = UIColor(red:0.310, green:0.706, blue:0.965, alpha:1.00) //Red:0.310 green:0.706 blue:0.965 alpha:1.00
             globalVars.statusImage = "connected"
             globalVars.statusBitmap = "blueDew"
+            globalVars.statusGraphCir = "blue-94"
         }
         else {
             globalVars.textString = "disconnected"
             globalVars.shortString = "!"
             globalVars.labelString = """
-                                    Phone not
-                                    connected
+                                    Phone signal
+                                    lost
                                     """
             globalVars.notificationString = "Disconnected!"
             globalVars.statusImage = "disconnected"
             globalVars.statusBitmap = "redDew"
+            globalVars.statusGraphCir = "red-94"
             globalVars.stringColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
         }
         

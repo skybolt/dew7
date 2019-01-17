@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D40DAF8420AFA68300BBA8CA /* StatusReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C744941FB5570000E82EB6 /* StatusReporter.swift */; };
+		D4A7DACA21F02EC8007340D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4A7DAC921F02EC8007340D9 /* Assets.xcassets */; };
 		D4C744921FB5468F00E82EB6 /* DEW7.ckcomplication in Resources */ = {isa = PBXBuildFile; fileRef = D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */; };
 		D4D0C89220B258A900C08DDD /* DebugInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0C89120B258A900C08DDD /* DebugInfoController.swift */; };
 		D4D0C89320B2634700C08DDD /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4D706511FB3E77400523A1E /* Interface.storyboard */; };
@@ -24,8 +25,6 @@
 		D4D706631FB3E77400523A1E /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */; };
 		D4D706651FB3E77400523A1E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706641FB3E77400523A1E /* NotificationController.swift */; };
 		D4D706671FB3E77400523A1E /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D706661FB3E77400523A1E /* ComplicationController.swift */; };
-		D4E68C921FBF7BBB0054274A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E68C911FBF7BBB0054274A /* Assets.xcassets */; };
-		D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4E68C911FBF7BBB0054274A /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +70,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D4A7DAC921F02EC8007340D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4C744911FB5468F00E82EB6 /* DEW7.ckcomplication */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DEW7.ckcomplication; sourceTree = "<group>"; };
 		D4C744941FB5570000E82EB6 /* StatusReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusReporter.swift; sourceTree = "<group>"; };
 		D4D0C89120B258A900C08DDD /* DebugInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfoController.swift; sourceTree = "<group>"; };
@@ -92,7 +92,6 @@
 		D4D706661FB3E77400523A1E /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		D4D7066A1FB3E77400523A1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4D7066B1FB3E77400523A1E /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		D4E68C911FBF7BBB0054274A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,13 +159,13 @@
 		D4D7065F1FB3E77400523A1E /* DEW 7 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				D4A7DAC921F02EC8007340D9 /* Assets.xcassets */,
 				D4C744941FB5570000E82EB6 /* StatusReporter.swift */,
 				D4D706601FB3E77400523A1E /* InterfaceController.swift */,
 				D4D0C89120B258A900C08DDD /* DebugInfoController.swift */,
 				D4D706621FB3E77400523A1E /* ExtensionDelegate.swift */,
 				D4D706641FB3E77400523A1E /* NotificationController.swift */,
 				D4D706661FB3E77400523A1E /* ComplicationController.swift */,
-				D4E68C911FBF7BBB0054274A /* Assets.xcassets */,
 				D4D7066A1FB3E77400523A1E /* Info.plist */,
 				D4D7066B1FB3E77400523A1E /* PushNotificationPayload.apns */,
 			);
@@ -284,7 +283,6 @@
 				D4D706481FB3E77400523A1E /* LaunchScreen.storyboard in Resources */,
 				D4D706451FB3E77400523A1E /* Assets.xcassets in Resources */,
 				D4D706431FB3E77400523A1E /* Main.storyboard in Resources */,
-				D4E68C921FBF7BBB0054274A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,8 +299,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A7DACA21F02EC8007340D9 /* Assets.xcassets in Resources */,
 				D4D0C89320B2634700C08DDD /* Interface.storyboard in Resources */,
-				D4E68C931FBF7BBB0054274A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -34,7 +34,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         globalVars.debugString = someString + globalVars.debugString
         let subString = globalVars.debugString.prefix(45)
         globalVars.debugString = String(subString)
-        print(globalVars.debugString)
+//        print(globalVars.debugString)
         
     }
     
@@ -178,6 +178,8 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         globalVars.sessionChangeCounter = globalVars.sessionChangeCounter + 1
         let backgroundTask = WKApplicationRefreshBackgroundTask()
         reloadComplicationData(backgroundTask: backgroundTask)
+        // check https://forums.developer.apple.com/thread/71501 for how to better do background refreshes? Might be worht while
+        // do here and in complication controller where we call a refresh complication
     }
 
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {

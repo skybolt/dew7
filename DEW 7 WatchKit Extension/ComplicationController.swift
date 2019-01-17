@@ -27,14 +27,29 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Population
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         
+                    if #available(watchOSApplicationExtension 5.0, *) {
+                        
+                        if complication.family == .graphicCircular {
+                            let graphCirc = CLKComplicationTemplateGraphicCircularImage()
+                            graphCirc.imageProvider = CLKFullColorImageProvider(fullColorImage: UIImage(named: globalVars.statusGraphCir)!)
+                            handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: graphCirc))
+                        }
+                        
+                        if complication.family == .graphicBezel {
+                            let graphBez = CLKComplicationTemplateGraphicBezelCircularText()
+                            let graphCirc = CLKComplicationTemplateGraphicCircularImage()
+                            graphCirc.imageProvider = CLKFullColorImageProvider(fullColorImage: UIImage(named: globalVars.statusGraphCir)!)
+                            graphBez.textProvider = CLKSimpleTextProvider(text: globalVars.labelString)
+                            graphBez.circularTemplate = graphCirc
+                            handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: graphBez))
+                        }
+                        
+                    }  //end if 5.0 supported
+    
         if complication.family == .utilitarianSmall {
 //            print("utilitarianSmall")
-//            let smallFlat = CLKComplicationTemplateUtilitarianSmallFlat()
-//            let smallFlat = CLKComplicationTemplateUtilitarianSmallRingImage()
-//            let smallFlat = CLKComplicationTemplateUtilitarianSmallRingText()
             let smallFlat = CLKComplicationTemplateUtilitarianSmallSquare()
             smallFlat.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
-//            smallFlat.textProvider = CLKSimpleTextProvider(text:   globalVars.shortString)
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: smallFlat))
         }
             
@@ -42,7 +57,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 //            print("utilitarianLarge")
             let largeFlat = CLKComplicationTemplateUtilitarianLargeFlat()
             largeFlat.textProvider = CLKSimpleTextProvider(
-//                text: globalVars.textString + " " + String(globalVars.counter), shortText: globalVars.shortString)
                 text: globalVars.textString, shortText: globalVars.shortString)
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: largeFlat))
         }
@@ -57,8 +71,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         else if complication.family == .modularSmall {
 //            print("modularSmall")
             let modSmall = CLKComplicationTemplateModularSmallSimpleImage()
-//            let modSmall = CLKComplicationTemplateModularSmallRingImage()
-            modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusImage)!)
+            modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusBitmap)!)
             modSmall.imageProvider.tintColor = globalVars.stringColor
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: modSmall))
         }
@@ -83,6 +96,28 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - Placeholder Templates
     func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
+        
+        if #available(watchOSApplicationExtension 5.0, *) {
+
+//            print("graphicCircular")
+            if complication.family == .graphicCircular {
+//                print("template for graphCir")
+                let graphCirc = CLKComplicationTemplateGraphicCircularImage()
+//                graphCirc.imageProvider = CLKFullColorImageProvider(fullColorImage: UIImage(named: "black-94")!)
+                graphCirc.imageProvider = CLKFullColorImageProvider(fullColorImage: UIImage(named: globalVars.statusGraphCir)!)
+                handler(graphCirc)
+            }
+            
+            if complication.family == .graphicBezel {
+                let graphBez = CLKComplicationTemplateGraphicBezelCircularText()
+                let graphCirc = CLKComplicationTemplateGraphicCircularImage()
+                graphCirc.imageProvider = CLKFullColorImageProvider(fullColorImage: UIImage(named: globalVars.statusGraphCir)!)
+                graphBez.textProvider = CLKSimpleTextProvider(text: globalVars.labelString)
+                graphBez.circularTemplate = graphCirc
+                handler(graphBez)
+            }
+        }
+
         
         if complication.family == .utilitarianSmall {
 //            print("utilitarianSmall")
