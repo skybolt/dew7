@@ -38,22 +38,28 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         
     }
     
-    func applicationDidBecomeActive() {
-        checkSessionStatus()
-        updateComplicationDisplay()
-    }
-    
     func scheduleApplicationRefresh() {
         //        print(sharedObjects.simpleDebug())
-        let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 61)
+        let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 300)
         WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
         print("\n\(sharedObjects.simpleDebug()) for \(sharedObjects.localTime(date: nextFire))\n")
     }
     
+    //pasted BG task from DEW 8
+    func scheduleSnapshotRefresh() {
+        print(sharedObjects.simpleDebug())
+        let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 300)
+        WKExtension.shared().scheduleSnapshotRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
+        print("\n\(sharedObjects.simpleDebug()) for \(sharedObjects.localTime(date: nextFire))\n")
+    }
+    
     func applicationWillResignActive() {
+        print(sharedObjects.simpleDebug())
 //        reloadComplicationData8(backgroundTask: backgroundTask)
+        //2018-01-17 do not schedule app or snap refreshes see what happens, will it ever fire? What
+        //if watch state changes?
         scheduleApplicationRefresh()
-        scheduleSnapshotRefresh()
+//        scheduleSnapshotRefresh()
         updateComplicationDisplay()
     }
     
@@ -61,13 +67,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
 //        print(sharedObjects.simpleDebug())
         let complicationsController = ComplicationController()
         complicationsController.reloadOrExtendData()
-    }
-    
-    //pasted BG task from DEW 8
-    func scheduleSnapshotRefresh() {
-        let nextFire = Date(timeIntervalSinceNow: 1 * 1 * 61)
-        WKExtension.shared().scheduleSnapshotRefresh(withPreferredDate: nextFire, userInfo: nil) { _ in }
-        print("\n\(sharedObjects.simpleDebug()) for \(sharedObjects.localTime(date: nextFire))\n")
     }
     
     func reloadComplicationData8(backgroundTask: WKApplicationRefreshBackgroundTask) {
@@ -96,34 +95,49 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     
     func throwNotification() {
         
-        globalVars.notificationThrown = sharedObjects.localTime(date: Date())
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            if settings.alertSetting == .enabled {
-                let notificationContent = UNMutableNotificationContent()
+//        globalVars.notificationThrown = sharedObjects.localTime(date: Date())
+//        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+//            if settings.alertSetting == .enabled {
+//                let notificationContent = UNMutableNotificationContent()
+//
+//
+//                notificationContent.sound = UNNotificationSound.default;
+//                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
+//                let identifier = self.stringWithUUID()
+//
+//                notificationContent.body = globalVars.labelString
+//                notificationContent.body =
+//
+//                """
+//                Ask: \(globalVars.notificationAsked)
+//                Thr: \(globalVars.notificationThrown)
+//                UUID:\(identifier)
+//                """
+//                print(identifier)
+//                print("thrown")
+//
+//                let notificationRequest = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: notificationTrigger)
+//                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
+//                }
+//            }
+//        }
+    }
+    
+    func updateDisplayData() {
         
-                notificationContent.body = globalVars.labelString
-
-                notificationContent.body = """
-                                            Ask: \(globalVars.notificationAsked)
-                                            Thr: \(globalVars.notificationThrown)
-                                            """
-                notificationContent.sound = UNNotificationSound.default;
-                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
-                let identifier = self.stringWithUUID()
-                let notificationRequest = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: notificationTrigger)
-                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
-                }
-            }
-        }
     }
 
     func checkSessionStatus() {
-//        print(sharedObjects.fullDebug())
+        
+        print(sharedObjects.simpleDebug())
+        
         if WCSession.isSupported() {
-            StatusReporter.updateStatus()
+//            StatusReporter.updateStatus() //this might not be necessary as updateStatus gets called elsewhere as well
             let session = WCSession.default
             if (session.activationState.rawValue != 0) { //if you don't have this, sometimes it;ll try and check status before the ssession is active. Not sure if that's an expensive fail or a cheap fail, better to code around it rather than let it fail
                 
+                globalVars.checkSessionCounter = globalVars.checkSessionCounter + 1
+                globalVars.lastSessionCheck = sharedObjects.localTime(date: Date())
                 globalVars.newConnectionStatus = session.isReachable
                 
                 if (globalVars.newConnectionStatus == true) {
@@ -144,7 +158,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                     globalVars.notificationAsked = sharedObjects.localTime(date: Date())
 //                    throwNotification()
                 } else {
-                    globalVars.debugString = "." + globalVars.debugString
+                    globalVars.debugString = " " + globalVars.debugString
                     //no change in status, so don't do anything?
                 }
                 globalVars.oldConnectionStatus = session.isReachable
@@ -160,6 +174,12 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         activationState: WCSessionActivationState, error: Error?) {
     }
     
+    func applicationDidBecomeActive() {
+        print("did Active")
+//        checkSessionStatus() //this is not causing the snapshot loop
+        updateComplicationDisplay()
+    }
+    
     func activateSession() {
         if WCSession.isSupported() {
             let session  = WCSession.default
@@ -173,43 +193,58 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
     }
     
     func sessionReachabilityDidChange(_ wSession: WCSession) {
+        //This should be called when the watch detects a session change. But it never gets called. 
         print(sharedObjects.simpleDebug())
+        print("didChange (ExDelegate)")
         StatusReporter.updateStatus()
         globalVars.sessionChangeCounter = globalVars.sessionChangeCounter + 1
+        //REMOVE bg task 2019-01-17 see if any trigger
         let backgroundTask = WKApplicationRefreshBackgroundTask()
         reloadComplicationData(backgroundTask: backgroundTask)
-        // check https://forums.developer.apple.com/thread/71501 for how to better do background refreshes? Might be worht while
-        // do here and in complication controller where we call a refresh complication
     }
 
     func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
+        print("func handle(bg/sn)")
         for task in backgroundTasks {
+            
             switch task {
             
             case let backgroundTask as WKApplicationRefreshBackgroundTask:
+                print(task)
+                //you are expected to schedule another BG AR task here.
+                //see https://developer.apple.com/documentation/watchkit/wkapplicationrefreshbackgroundtask?language=objc
                 compareDates(id: "a", date: globalVars.dateLastAppRefreshed)
                 globalVars.bgAppCounter = globalVars.bgAppCounter + 1
                 reloadComplicationData8(backgroundTask: backgroundTask)
                 checkSessionStatus()
                 globalVars.dateLastAppRefreshed = Date()
-                backgroundTask.setTaskCompletedWithSnapshot(false)
+                scheduleApplicationRefresh()
+//                backgroundTask.setTaskCompletedWithSnapshot(false)
+                backgroundTask.setTaskCompleted()
 
                 
             case let snapshotTask as WKSnapshotRefreshBackgroundTask:
+                print(task)
+                print("wtf?")
                 compareDates(id: "s", date: globalVars.dateLastSnapped)
                 globalVars.bgSnapshotCounter = globalVars.bgSnapshotCounter + 1
                 globalVars.dateLastSnapped = Date()
-                checkSessionStatus()
-                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil) //code based on DEW 8, new normal code as insertedf by xCode
+                checkSessionStatus() //commenting this out stops the endless loop, but is useless to comment it out as it's our core activity, also, it's unlikely this is the root cause, only the smoking gun. Something in checkSessionStatus() must be causing the snapshot to get called again and again. Note: reason type is 2, as if it's scheduled, but the schedule is 5 min in future (or some other value that's not now).
+                // another ntoe - this only loops in the simulator, not on the watch
+                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil) //code based on DEW 8, new normal code as inserted by xCode
 
             case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
+                print("connectivityTask")
                 connectivityTask.setTaskCompletedWithSnapshot(false)
             
             case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
+                print("urlSessionTask")
                 urlSessionTask.setTaskCompletedWithSnapshot(false)
             
             default:
-                task.setTaskCompletedWithSnapshot(false)
+                print("case default")
+//                task.setTaskCompletedWithSnapshot(false)
+                task.setTaskCompleted()
             }
         }
     }
@@ -220,7 +255,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
             print("applicationContext[\"status\"] is \(status)")
         }
     } //end of func session
-    
 }
 
 extension ExtensionDelegate: UNUserNotificationCenterDelegate {
@@ -234,8 +268,3 @@ extension ExtensionDelegate: UNUserNotificationCenterDelegate {
         } //request closed
     }
 }
-
-
-//                snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date() + 90, userInfo: nil) //my code from 2017
-//                print("let's call snapshot from snapshot")
-//                scheduleSnapshotRefresh()

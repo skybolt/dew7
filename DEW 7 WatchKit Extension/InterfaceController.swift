@@ -50,11 +50,14 @@ class InterfaceController: WKInterfaceController {
     
     override func awake(withContext context: Any?) {
         print(sharedObjects.simpleDebug())
-        checkStatusAction()
         super.awake(withContext: context)
     }
     
     override func willActivate() {
+        print(sharedObjects.simpleDebug())
+//        checkStatusAction()
+        statusLabel.setText(globalVars.labelString)
+        refreshButtonImage.setImageNamed(globalVars.statusBitmap)
     }
     
     override func didDeactivate() {

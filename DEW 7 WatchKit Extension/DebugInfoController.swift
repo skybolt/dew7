@@ -9,11 +9,9 @@
 import WatchKit
 import Foundation
 
-
 class DebugInfoController: WKInterfaceController {
     
     @IBOutlet var debugLabel: WKInterfaceLabel!
-    
     
     @IBAction func Close() {
 //        presentController(withName: "debugInfo", context: self)
@@ -29,15 +27,17 @@ class DebugInfoController: WKInterfaceController {
 //        print(sharedObjects.fullDebug())
         debugLabel.setText(
             """
-            session changes: \(globalVars.sessionChangeCounter)
             bgApp Refreshes: \(globalVars.bgAppCounter)
-            bgSnp Refreshes: \(globalVars.bgSnapshotCounter)
+            bgApp Snapshots: \(globalVars.bgSnapshotCounter)
+            sessionChecks: \(globalVars.checkSessionCounter)
+            session changes: \(globalVars.sessionChangeCounter)
+            last refresh: \(globalVars.lastSessionCheck)
             ref intervals: \(globalVars.debugString)
             oldStatus: \(globalVars.oldConnectionStatus)
             newStatus: \(globalVars.newConnectionStatus)
             notificationAsked: \(globalVars.notificationAsked)
-            notificationThrow: \(globalVars.notificationThrown)
             """)
+//        notificationThrow: \(globalVars.notificationThrown)
     }
 
     override func willActivate() {

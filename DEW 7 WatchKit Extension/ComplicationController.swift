@@ -39,7 +39,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                             let graphBez = CLKComplicationTemplateGraphicBezelCircularText()
                             let graphCirc = CLKComplicationTemplateGraphicCircularImage()
                             graphCirc.imageProvider = CLKFullColorImageProvider(fullColorImage: UIImage(named: globalVars.statusGraphCir)!)
-                            graphBez.textProvider = CLKSimpleTextProvider(text: globalVars.labelString)
+                            graphBez.textProvider = CLKSimpleTextProvider(text: globalVars.bezelString)
                             graphBez.circularTemplate = graphCirc
                             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: graphBez))
                         }
