@@ -12,6 +12,9 @@ import UserNotifications
 
 struct globalVars {
     //set up global variables and set initial values
+    static var rawSessionStatus = 0
+    static var oldConnectionStatus = Bool(false)
+    static var newConnectionStatus = Bool(false)
     static var stringColor = UIColor.yellow
     static var textString = "connecting"
     static var shortString = "..."
@@ -33,13 +36,36 @@ struct globalVars {
     static var notificationThrown = "n/a"
     static var newStatusString = "nN"
     static var oldStatusString = "nN"
-    static var newConnectionStatus = Bool(false)
-    static var oldConnectionStatus = Bool(false)
     static var dateLastSnapped = Date()
     static var dateLastAppRefreshed = Date()
 }
 
 final class sharedObjects: NSObject {
+    
+    static func checkSessionStatus(callingFunctionName: String = #function) {
+        print("\(sharedObjects.simpleDebug()) called by \(callingFunctionName)")
+        //call order 4
+        //called on didResignActive.
+        //called from (_handle, bgSnap)
+        
+        globalVars.checkSessionCounter = globalVars.checkSessionCounter + 1
+        globalVars.lastSessionCheck = sharedObjects.localTime(date: Date())
+        
+        if WCSession.isSupported() {
+            
+            let session = WCSession.default
+            //            let activationString = session.activationState.rawValue
+            //            print("activationString.rawValue = \(activationString)")
+            if (session.activationState.rawValue != 0) { //Don't check session if hasn't been activated
+                globalVars.rawSessionStatus = session.activationState.rawValue
+                print(globalVars.oldConnectionStatus)
+                print(globalVars.newConnectionStatus)
+                globalVars.newConnectionStatus = session.isReachable
+//                globalVars.oldConnectionStatus = session.isReachable
+                StatusReporter.updateGlobalVars()
+            }
+        }
+    }
     
     static func localDateTime(date: Date) -> String {
         let timeStamp = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .medium)
@@ -110,11 +136,12 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
         return "\(file):\(line) : \(function)"
     }
     
-    static func updateStatus() {
-        print(sharedObjects.simpleDebug())
+    static func updateGlobalVars(callingFunctionName: String = #function) {
+//        print("\(sharedObjects.fullDebug()) called by \(callingFunctionName)")
 
-        globalVars.newConnectionStatus = WCSession.default.isReachable
-        if WCSession.default.isReachable == true {
+//        globalVars.newConnectionStatus = WCSession.default.isReachable
+//        if WCSession.default.isReachable == true {
+        if globalVars.newConnectionStatus == true {
             globalVars.textString = "connected"
             globalVars.shortString = "OK"
             globalVars.labelString =

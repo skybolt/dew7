@@ -32,8 +32,9 @@ class InterfaceController: WKInterfaceController {
     }
     
     func checkStatusAction() {
-        print(sharedObjects.simpleDebug())
-        StatusReporter.updateStatus()
+        print(sharedObjects.fullDebug())
+        sharedObjects.checkSessionStatus()
+        StatusReporter.updateGlobalVars()
         statusLabel.setText(globalVars.labelString)
         refreshButtonImage.setImageNamed(globalVars.statusBitmap)
     }
@@ -49,12 +50,12 @@ class InterfaceController: WKInterfaceController {
     }
     
     override func awake(withContext context: Any?) {
-        print(sharedObjects.simpleDebug())
+//        print(sharedObjects.simpleDebug())
         super.awake(withContext: context)
     }
     
     override func willActivate() {
-        print(sharedObjects.simpleDebug())
+//        print(sharedObjects.simpleDebug())
 //        checkStatusAction()
         statusLabel.setText(globalVars.labelString)
         refreshButtonImage.setImageNamed(globalVars.statusBitmap)
