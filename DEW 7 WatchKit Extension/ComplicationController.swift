@@ -73,7 +73,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let modSmall = CLKComplicationTemplateModularSmallSimpleImage()
             //statusBitmap is too big for this location - won't scale like circularSmall does.
 //            modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.statusBitmap)!)
-            modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: "connected")!)
+//            modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: "connected")!)
+            modSmall.imageProvider = CLKImageProvider(onePieceImage: UIImage(named: globalVars.textString)!)
             modSmall.imageProvider.tintColor = globalVars.stringColor
             handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: modSmall))
         }
