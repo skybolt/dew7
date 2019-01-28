@@ -90,37 +90,6 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
         return uuidString as String
     }
     
-    
-    func throwNotification() {
-        
-//        globalVars.notificationThrown = sharedObjects.localTime(date: Date())
-//        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-//            if settings.alertSetting == .enabled {
-//                let notificationContent = UNMutableNotificationContent()
-//
-//
-//                notificationContent.sound = UNNotificationSound.default;
-//                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
-//                let identifier = self.stringWithUUID()
-//
-//                notificationContent.body = globalVars.labelString
-//                notificationContent.body =
-//
-//                """
-//                Ask: \(globalVars.notificationAsked)
-//                Thr: \(globalVars.notificationThrown)
-//                UUID:\(identifier)
-//                """
-//                print(identifier)
-//                print("thrown")
-//
-//                let notificationRequest = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: notificationTrigger)
-//                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
-//                }
-//            }
-//        }
-    }
-    
     func updateInterfaceDisplay(callingFunctionName: String = #function) {
         print("\(sharedObjects.simpleDebug()) called by \(callingFunctionName)")
         //call order 3. Manually called from didBecomeActive

@@ -107,20 +107,25 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
             if settings.alertSetting == .enabled {
                 let notificationContent = UNMutableNotificationContent()
                 
+                //this line appears to be overwritten by the below notificationContent.body
                 notificationContent.body = globalVars.labelString
+                notificationContent.body = "farts"
                 
                 let uuidObj = CFUUIDCreate(nil)
                 let uuidString = CFUUIDCreateString(nil, uuidObj)!
                 print("uuidString: \(uuidString)")
                 let identifier = String(uuidString)
                 
+                //this one isbn't showing UUId, is this real?
+                //this isn't the notification content, either. wtf?
+                //lets uninstall clean and rebuild.
                 notificationContent.body =
                 
                 """
-                \(globalVars.labelString)
+                uuid: uuID=\(uuidString)
+                \(globalVars.notificationString)
                 Ask: \(globalVars.notificationAsked)
                 Thr: \(globalVars.notificationThrown)
-                uuid: uuID=\(uuidString)
                 """
                 notificationContent.sound = UNNotificationSound.default;
                 let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
@@ -148,9 +153,10 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
             """
             D.E.W. Line
             active
+            iPhone connected
             """
             globalVars.bezelString = globalVars.labelString
-            globalVars.notificationString = "iPhone connected"
+            globalVars.notificationString = "iPhone detected"
             globalVars.stringColor = UIColor(red:0.310, green:0.706, blue:0.965, alpha:1.00) //Red:0.310 green:0.706 blue:0.965 alpha:1.00
             globalVars.statusImage = "connected"
             globalVars.statusBitmap = "blueDew"
@@ -164,8 +170,8 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
             Cannot detect
             phone signal
             """
-            globalVars.bezelString = "Phone signal lost!"
-            globalVars.notificationString = "Disconnected!"
+            globalVars.bezelString = "iPhone signal lost!"
+            globalVars.notificationString = globalVars.bezelString
             globalVars.statusImage = "disconnected"
             globalVars.statusBitmap = "redDew"
             globalVars.statusGraphCir = "red-94"
@@ -189,7 +195,7 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
                     notificationContent.body =
 
                     """
-                    \(globalVars.labelString)
+                    \(globalVars.notificationString)
                     Ask: \(globalVars.notificationAsked)
                     Thr: \(globalVars.notificationThrown)
                     Last updated: \(sharedObjects.localTime(date: Date()))

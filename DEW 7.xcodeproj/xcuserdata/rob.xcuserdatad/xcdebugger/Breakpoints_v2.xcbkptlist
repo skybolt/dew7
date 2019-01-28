@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DEW 7 WatchKit Extension/ExtensionDelegate.swift"
-            timestampString = "569803010.000855"
+            timestampString = "570389069.9583859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "sessionReachabilityDidChange(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DEW 7 WatchKit Extension/ExtensionDelegate.swift"
-            timestampString = "569803010.001772"
+            timestampString = "570389069.958437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "sessionWatchStateDidChange(callingFunctionName:)"
             landmarkType = "7">
          </BreakpointContent>
