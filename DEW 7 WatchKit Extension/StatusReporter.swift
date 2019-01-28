@@ -100,41 +100,9 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
     }
     
     func sessionReachabilityDidChange(_ wSession: WCSession) {
-        //This should be called when the watch detects a session change. But it never gets called.
+//        This should be called when the watch detects a session change. But it never gets called.
         print("didChange (StatusReporter)")
-        globalVars.notificationThrown = sharedObjects.localTime(date: Date())
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            if settings.alertSetting == .enabled {
-                let notificationContent = UNMutableNotificationContent()
-                
-                //this line appears to be overwritten by the below notificationContent.body
-                notificationContent.body = globalVars.labelString
-                notificationContent.body = "farts"
-                
-                let uuidObj = CFUUIDCreate(nil)
-                let uuidString = CFUUIDCreateString(nil, uuidObj)!
-                print("uuidString: \(uuidString)")
-                let identifier = String(uuidString)
-                
-                //this one isbn't showing UUId, is this real?
-                //this isn't the notification content, either. wtf?
-                //lets uninstall clean and rebuild.
-                notificationContent.body =
-                
-                """
-                uuid: uuID=\(uuidString)
-                \(globalVars.notificationString)
-                Ask: \(globalVars.notificationAsked)
-                Thr: \(globalVars.notificationThrown)
-                """
-                notificationContent.sound = UNNotificationSound.default;
-                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
-
-                let notificationRequest = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: notificationTrigger)
-                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
-                }
-            }
-        }
+        StatusReporter.updateGlobalVars()
     }
     
     static func debug(file: String = #file, line: Int = #line, function: String = #function) -> String {
@@ -142,17 +110,13 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
     }
     
     static func updateGlobalVars(callingFunctionName: String = #function) {
-//        print("\(sharedObjects.fullDebug()) called by \(callingFunctionName)")
 
-//        globalVars.newConnectionStatus = WCSession.default.isReachable
-//        if WCSession.default.isReachable == true {
         if globalVars.newConnectionStatus == true {
             globalVars.textString = "connected"
             globalVars.shortString = "OK"
             globalVars.labelString =
             """
-            D.E.W. Line
-            active
+            D.E.W. Line active
             iPhone connected
             """
             globalVars.bezelString = globalVars.labelString
@@ -179,7 +143,6 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
         }
         
         if (globalVars.oldConnectionStatus != globalVars.newConnectionStatus) {
-//        if (true) {
             print("oldStat != newStat")
             globalVars.notificationAsked = sharedObjects.localTime(date: Date())
             UNUserNotificationCenter.current().getNotificationSettings { (settings) in
@@ -192,14 +155,9 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
                     let uuidObj = CFUUIDCreate(nil)
                     let uuidString = CFUUIDCreateString(nil, uuidObj)!
                     
-                    notificationContent.body =
+                    notificationContent.body = globalVars.notificationString
 
-                    """
-                    \(globalVars.notificationString)
-                    Ask: \(globalVars.notificationAsked)
-                    Thr: \(globalVars.notificationThrown)
-                    Last updated: \(sharedObjects.localTime(date: Date()))
-                    """
+
                     
                     notificationContent.sound = UNNotificationSound.default;
                     let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
@@ -217,36 +175,3 @@ final class StatusReporter: NSObject, UNUserNotificationCenterDelegate, WCSessio
         globalVars.oldConnectionStatus = globalVars.newConnectionStatus
     }
 }
-
-//extension StatusReporter: UNUserNotificationCenterDelegate {
-//
-//    func stringWithUUID() -> String {
-//        let uuidObj = CFUUIDCreate(nil)
-//        let uuidString = CFUUIDCreateString(nil, uuidObj)!
-//        return uuidString as String
-//    }
-//
-//    func throwNotification() {
-//
-//        globalVars.notificationThrown = sharedObjects.localTime(date: Date())
-//        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-//            if settings.alertSetting == .enabled {
-//                let notificationContent = UNMutableNotificationContent()
-//
-//                notificationContent.body = globalVars.labelString
-//
-//                notificationContent.body = """
-//                Ask: \(globalVars.notificationAsked)
-//                Thr: \(globalVars.notificationThrown)
-//                """
-//                notificationContent.sound = UNNotificationSound.default();
-//                let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (0.000001), repeats: false)
-//                let identifier = self.stringWithUUID()
-//                let notificationRequest = UNNotificationRequest(identifier: identifier, content: notificationContent, trigger: notificationTrigger)
-//                UNUserNotificationCenter.current().add(notificationRequest) { (error) in
-//                }
-//            }
-//        }
-//    }
-//}
-
